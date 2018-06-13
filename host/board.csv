@@ -1,0 +1,27 @@
+Qty,Line Item,Manufacturer,Schematic Reference,Description
+,,,,
+1,FT232RL,FTDI,"H.UART",USB to UART bridge; SSOP-28
+1,"BGA2801,115",NXP Semiconductors,"H.AMP",wideband amplifier; SOT-363
+1,ATAES132A-SHER-B,Microchip,"H.I2C1",crypto. co-processor; SOIC-8
+1,ATSHA204A-SSHDA-B,Microchip,"H.I2C2",crypto. co-processor; SOIC-8
+1,ATECC108A-SSHDA-B,Microchip,"H.I2C3",crypto. co-processor; SOIC-8
+2,B3F-4000,Omron,"H.S1, H.S2",SPST switch
+1,61729-1011BLF,FCI,"H.USB",USB receptacle
+1,5-146281-2,TE Connectivity,"H.J7",2x1 male header
+5,5-146281-3,TE Connectivity,"H.J2, H.J3, H.J4, H.J5, H.J6",3x1 male header
+2,929974-01-16,3M,"H.J1L, H.J1R",16x1 female header
+5,5-1814400-1,TE Connectivity,"H.X1, H.X2, H.X3, H.X4, H.X5",horizontal female SMA connector
+2,APT3216SGC,Kingbright,"H.D1, H.D2",green LED; 1206
+2,APT3216YC,Kingbright,"H.D3, H.D4",yellow LED; 1206
+1,APT3216EC,Kingbright,"H.D5",red LED; 1206
+1,1206L025YR,Littelfuse,"H.F1",500 mA polyfuse; 1206
+1,MLZ1608N100LT000,TDK,"H.L1",10 uH inductor; 0603
+1,T491A106K010AT,KEMET,"H.C3",10 uF tantalum capacitor; 1206
+2,C0603C152J8RACTU,KEMET,"H.C10, H.C11",1.5 nF = 1500 pF ceramic capacitor; 0603
+1,C0603C223K1RACTU,KEMET,"H.C8",22 nF = 0.022 uF ceramic capacitor; 0603
+6,C0603C104K8RACTU,KEMET,"H.C1, H.C2, H.C4, H.C5, H.C6, H.C9",100 nF = 0.1 uF ceramic capacitor; 0603
+1,C0603C475K8PACTU,KEMET,"H.C7",4.7 uF ceramic capacitor; 0603
+1,CR0603-JW-101ELF,Bourns,H.R8,100 ohm resistor; 0603
+5,CR0603-JW-102ELF,Bourns,"H.R1, H.R2, H.R3, H.R4, H.R5",1k ohm resistor; 0603
+2,CR0603-JW-103ELF,Bourns,"H.R6, H.R7",10k ohm resistor; 0603
+2,CR0603-JW-392ELF,Bourns,"H.R9, H.R10",3.9k ohm resistor; 0603

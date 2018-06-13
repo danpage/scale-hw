@@ -1,0 +1,11 @@
+Qty,Line Item,Manufacturer,Schematic Reference,Description
+,,,,
+1,FOXSLF/160-20,Fox Electronics,"T.XTAL",16 MHz crystal
+1,"LPC1313FBD48,151",NXP Semiconductors,"T.DUT"; LQFP-48
+2,5-146281-2,TE Connectivity,"T.J5, T.J6",2x1 male header
+2,5-146281-3,TE Connectivity,"T.J3, T.J4",3x1 male header
+1,4-103328-4,TE Connectivity,"T.J2",10x2 male header
+2,961116-6404-AR,3M,"T.J1L, T.J1R",16x1 male header
+2,C0603C180J5GACTU,KEMET,"T.C1, T.C2",0.018 nF = 18 pF ceramic capacitor; 0603
+1,C0603C301J5GACTU,KEMET,"T.C3",0.3 nF = 300 pF ceramic capacitor; 0603
+1,C0603C101J5GACTU,KEMET,"T.C4",0.1 nF = 100 pF ceramic capacitor; 0603
