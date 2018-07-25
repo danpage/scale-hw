@@ -36,14 +36,14 @@ ${BSP_DIRS} :
 	@mkdir -p ${@}
 
 ./build/lib/%.o : %.c %.h
-	@${GCC_PREFIX}-gcc $(patsubst %, -I %, ${BSP_INCLUDES}) ${GCC_PATHS} ${GCC_FLAGS} -c -o ${@} ${<}
+	@${GCC_PREFIX}gcc $(patsubst %, -I %, ${BSP_INCLUDES}) ${GCC_PATHS} ${GCC_FLAGS} -c -o ${@} ${<}
 ./build/lib/%.o : %.S
-	@${GCC_PREFIX}-gcc $(patsubst %, -I %, ${BSP_INCLUDES}) ${GCC_PATHS} ${GCC_FLAGS} -c -o ${@} ${<}
+	@${GCC_PREFIX}gcc $(patsubst %, -I %, ${BSP_INCLUDES}) ${GCC_PATHS} ${GCC_FLAGS} -c -o ${@} ${<}
 
 $(filter %.h,    ${BSP_TARGETS}) : ./build/include/%.h :                  ${BSP_HEADERS}
 	@cp $(filter %$(notdir ${@}), ${^}) ${@}
 $(filter %.a,    ${BSP_TARGETS}) : ./build/lib/%.a     :                  ${BSP_OBJECTS}
-	@${GCC_PREFIX}-ar rcs ${@} ${^}
+	@${GCC_PREFIX}ar rcs ${@} ${^}
 $(filter %.conf, ${BSP_TARGETS}) : ./build/lib/%.conf  : $(filter %.conf, ${BSP_EXTRAS})
 	@cp ${<} ${@} 
 $(filter %.ld,   ${BSP_TARGETS}) : ./build/lib/%.ld    : $(filter %.ld,   ${BSP_EXTRAS})

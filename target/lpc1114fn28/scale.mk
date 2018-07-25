@@ -26,7 +26,7 @@ TARGETS    += ${PROJECT}.elf
 TARGETS    += ${PROJECT}.bin
 TARGETS    += ${PROJECT}.hex
 
-GCC_PREFIX  = arm-none-eabi
+GCC_PREFIX  = arm-none-eabi-
 GCC_FLAGS   = ${SCALE_CONF} -Wall -std=gnu99 -Os -mcpu=cortex-m0 -mthumb -nostartfiles -T ${BSP}/lib/scale.ld
 GCC_PATHS   = -I ${BSP}/include -L ${BSP}/lib 
 GCC_LIBS    = -lscale

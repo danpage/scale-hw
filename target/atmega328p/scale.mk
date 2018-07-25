@@ -26,7 +26,7 @@ TARGETS    += ${PROJECT}.elf
 TARGETS    += ${PROJECT}.bin
 TARGETS    += ${PROJECT}.hex
 
-GCC_PREFIX  = avr
+GCC_PREFIX  = avr-
 GCC_FLAGS   = ${SCALE_CONF} -Wall -std=gnu99 -Os -mmcu=atmega328p
 GCC_PATHS   = -I ${BSP}/include -L ${BSP}/lib
 GCC_LIBS    = -lscale

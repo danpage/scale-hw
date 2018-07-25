@@ -9,7 +9,7 @@ include scale.conf
 BSP_HEADERS   = ../../share/lpc13xx.h
 BSP_SOURCES   = ../../share/lpc13xx.c
 
-GCC_PREFIX    = arm-none-eabi
+GCC_PREFIX    = arm-none-eabi-
 GCC_FLAGS     = ${SCALE_CONF} -Wall -std=gnu99 -Os -mcpu=cortex-m3 -mthumb
 
 include ../../share/bsp.mk

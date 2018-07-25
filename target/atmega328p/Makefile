@@ -9,7 +9,7 @@ include scale.conf
 BSP_HEADERS   = ../../share/atmega328p.h
 BSP_SOURCES   = ../../share/atmega328p.c
 
-GCC_PREFIX    = avr
+GCC_PREFIX    = avr-
 GCC_FLAGS     = ${SCALE_CONF} -Wall -std=gnu99 -Os -mmcu=atmega328p
 
 include ../../share/bsp.mk
