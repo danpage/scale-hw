@@ -32,11 +32,11 @@ GCC_PATHS   = -I ${BSP}/include -L ${BSP}/lib
 GCC_LIBS    = -lscale
 
 %.elf %.map : ${SOURCES} ${HEADERS}
-	@${GCC_PREFIX}-gcc $(patsubst %, -I %, ${INCLUDES}) ${GCC_PATHS} ${GCC_FLAGS} -Wl,-Map=${*}.map -o ${*}.elf ${BSP}/lib/crt0.o ${SOURCES} ${GCC_LIBS}
+	@${GCC_PREFIX}gcc $(patsubst %, -I %, ${INCLUDES}) ${GCC_PATHS} ${GCC_FLAGS} -Wl,-Map=${*}.map -o ${*}.elf ${BSP}/lib/crt0.o ${SOURCES} ${GCC_LIBS}
 %.bin       : %.elf
-	@${GCC_PREFIX}-objcopy --gap-fill=0 -O binary ${<} ${@}
+	@${GCC_PREFIX}objcopy --gap-fill=0 -O binary ${<} ${@}
 %.hex       : %.elf
-	@${GCC_PREFIX}-objcopy --gap-fill=0 -O ihex   ${<} ${@}
+	@${GCC_PREFIX}objcopy --gap-fill=0 -O ihex   ${<} ${@}
 
 all     : ${TARGETS}
 
