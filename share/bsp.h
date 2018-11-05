@@ -42,6 +42,11 @@ typedef enum {
   SCALE_GPIO_PIN_GPI
 } scale_gpio_pin_t;
 
+typedef enum {
+  SCALE_UART_MODE_BLOCKING,
+  SCALE_UART_MODE_NONBLOCKING,
+} scale_uart_mode_t;
+
 typedef uint8_t scale_i2c_addr_t;
 
 typedef enum {
@@ -80,10 +85,14 @@ extern bool               scale_gpio_rd( scale_gpio_pin_t id         );
 // write (or  drive) GPIO pin
 extern void               scale_gpio_wr( scale_gpio_pin_t id, bool x );
 
+// check if UART is available for read  (i.e., would doing so block or not)
+extern bool               scale_uart_rd_avail();
+// check if UART is available for write (i.e., would doing so block or not)
+extern bool               scale_uart_wr_avail();
 // read  (or  receive) 1-byte from UART
-extern uint8_t            scale_uart_rd(           );
+extern uint8_t            scale_uart_rd( scale_uart_mode_t mode            );
 // write (or transmit) 1-byte to   UART
-extern void               scale_uart_wr( uint8_t x );
+extern void               scale_uart_wr( scale_uart_mode_t mode, uint8_t x );
 
 // read  (or  receive) buffer from 7-bit I2C address
 extern scale_i2c_status_t scale_i2c_rd( scale_i2c_addr_t addr, uint8_t* x, size_t n );

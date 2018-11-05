@@ -29,7 +29,7 @@ int main( int argc, char* argv[] ) {
     int n = strlen( x );
 
     for( int i = 0; i < n; i++ ) {
-      scale_uart_wr( x[ i ] );
+      scale_uart_wr( SCALE_UART_MODE_BLOCKING, x[ i ] );
     }
   }
 

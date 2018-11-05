@@ -8,7 +8,7 @@ Revision | Prototype                                                            
 :------: | :-------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 C.1      | <a href='./image/board-prototype_rev_c.jpg'><img src='./image/board-prototype_rev_c.jpg' width='200'></a> | <a href='./image/board-pcb_rev_c.jpg'><img src='./image/board-pcb_rev_c.jpg' width='200'></a> | [schematic](./board.sch) (plus [PDF](./board.pdf)), [board](./board.brd), [BOM](./board.csv), [OSH Park (PCB)](http://www.oshpark.com/shared_projects/ANKAjSGc), [Octopart (BOM)](http://www.octopart.com/bom-tool/BlsVKS9M) |
 
-- The target board houses an 
+- The target board houses a
   32-bit ARM Cortex-M0+
   core, which acts as the 
   [DUT](http://en.wikipedia.org/wiki/Device_under_test).

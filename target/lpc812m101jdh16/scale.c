@@ -194,12 +194,16 @@ bool scale_init( scale_conf_t* conf ) {
     LPC81X_SYSCON->SYSPLLCLKUEN   &= ~( 0x1 <<  0 ) ;        // Section 3.5.10: toggle
     LPC81X_SYSCON->SYSPLLCLKUEN   |=  ( 0x1 <<  0 ) ;        // Section 3.5.10: update 
   
-  while( !( LPC81X_SYSCON->SYSPLLCLKUEN & ( 0x1 << 0 ) ) );  // Section 3.5.10: wait for update
+  while( !( LPC81X_SYSCON->SYSPLLCLKUEN & ( 0x1 << 0 ) ) ) { // Section 3.5.10: wait for update
+    /* skip */
+  }
 
     LPC81X_SYSCON->SYSPLLCTRL      = SYSPLLCTRL;             // Table 10: configure system PLL => MSEL | ( PSEL << 5 )
     LPC81X_SYSCON->PDRUNCFG       &= ~( 0x1 <<  7 ) ;        // Table 43: power-up  system PLL
   
-  while( !( LPC81X_SYSCON->SYSPLLSTAT   & ( 0x1 << 0 ) ) );  // Section 3.5.10: wait for update
+  while( !( LPC81X_SYSCON->SYSPLLSTAT   & ( 0x1 << 0 ) ) ) { // Section 3.5.10: wait for update
+    /* skip */
+  }
 
     LPC81X_SYSCON->MAINCLKSEL      = MAINCLKSEL;             // Table 18: set main system clock
   
@@ -207,7 +211,9 @@ bool scale_init( scale_conf_t* conf ) {
     LPC81X_SYSCON->MAINCLKUEN     &= ~( 0x1 <<  0 ) ;        // Section 3.5.11: toggle
     LPC81X_SYSCON->MAINCLKUEN     |=  ( 0x1 <<  0 ) ;        // Section 3.5.11: update 
   
-  while( !( LPC81X_SYSCON->MAINCLKUEN   & ( 0x1 << 0 ) ) );  // Section 3.5.11: wait for update
+  while( !( LPC81X_SYSCON->MAINCLKUEN   & ( 0x1 << 0 ) ) ) { // Section 3.5.11: wait for update
+    /* skip */
+  }
 
     LPC81X_SYSCON->SYSAHBCLKDIV    = SYSAHBCLKDIV;           // Table 20: set AHB clock divider
 
@@ -270,6 +276,13 @@ bool scale_init( scale_conf_t* conf ) {
     LPC81X_UART0->CFG             &= ~( 0x3 <<  4 ) ;        // Table 173: no parity
     LPC81X_UART0->CFG             &= ~( 0x1 <<  6 ) ;        // Table 173: 0 stop bits
     LPC81X_UART0->CFG             |=  ( 0x1 <<  0 ) ;        // Table 173: enable
+
+  while(  scale_uart_rd_avail() ) { // flush, ready to read 
+    scale_uart_rd( SCALE_UART_MODE_NONBLOCKING );
+  }
+  while( !scale_uart_wr_avail() ) { // flush, ready to write
+    /* skip */
+  }
 
   /* Chapter 16 details the I2C interface.
    *
@@ -374,13 +387,25 @@ void scale_gpio_wr( scale_gpio_pin_t id, bool x ) {
   return;
 }
 
-uint8_t scale_uart_rd( void      ) {
-  while( !( LPC81X_UART0->STAT & ( 0x1 << 0 ) ) );
+bool scale_uart_rd_avail() {
+  return LPC81X_UART0->STAT & ( 0x1 << 0 );
+}
+
+bool scale_uart_wr_avail() {
+  return LPC81X_UART0->STAT & ( 0x1 << 2 );
+}
+
+uint8_t scale_uart_rd( scale_uart_mode_t mode            ) {
+  while( ( mode == SCALE_UART_MODE_BLOCKING ) && !scale_uart_rd_avail() ) {
+    /* skip */
+  }
   return ( LPC81X_UART0->RXDATA     );
 }
 
-void    scale_uart_wr( uint8_t x ) {
-  while( !( LPC81X_UART0->STAT & ( 0x1 << 2 ) ) );
+void    scale_uart_wr( scale_uart_mode_t mode, uint8_t x ) {
+  while( ( mode == SCALE_UART_MODE_BLOCKING ) && !scale_uart_wr_avail() ) {
+    /* skip */
+  }
          ( LPC81X_UART0->TXDATA = x );
   return;
 }

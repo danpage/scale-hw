@@ -22,42 +22,42 @@ scale_conf_t SCALE_CONF = {
 bool scale_init( scale_conf_t* conf ) {
   memcpy( &scale_conf, conf, sizeof( scale_conf_t ) );
 
-  /* To ensure some peripherals function at all, we need to explicitly enable
-   * the clock supplied to them; it's important this is done first, since the
-   * update of any control register for said peripheral would fail otherwise.
-   * Then we force a reset of any peripheral we can.
-   */
-
-    LPC13XX_SYSCON->SYSAHBCLKCTRL |=  ( 0x1 <<  5 ) ;        // Table  25:  enable I2C   clock
-    LPC13XX_SYSCON->SYSAHBCLKCTRL |=  ( 0x1 <<  6 ) ;        // Table  25:  enable GPIO  clock
-    LPC13XX_SYSCON->SYSAHBCLKCTRL |=  ( 0x1 << 12 ) ;        // Table  25:  enable UART  clock
-    LPC13XX_SYSCON->SYSAHBCLKCTRL |=  ( 0x1 << 16 ) ;        // Table  25:  enable IOCON clock
-
-    LPC13XX_SYSCON->PRESETCTRL    &= ~( 0x1 <<  1 ) ;        // Table  19:  enable reset I2C
-    LPC13XX_SYSCON->PRESETCTRL    |=  ( 0x1 <<  1 ) ;        // Table  19: disable reset I2C
-
   /* The majority of I/O pins have a configurable role; the configuration is
    * outlined in Chapter 8, which is used to match all board-specific pins;
    * it's important this is done next, since that configuration potentially
    * dictates whether or not the clock will subsequently work.
+   *
+   * To ensure some peripherals function at all, we need to explicitly enable
+   * the clock supplied to them; it's important this is done in a pre-defined
+   * order, since the update of any control register for said peripheral will
+   * would fail otherwise.
    */
 
-    LPC13XX_IOCON->PIO1_0          =  ( 0x1 <<  0 ) |        // Table 125: PIO1_0 => configure as GPIO
-                                      ( 0x0 <<  3 ) ;        //          : PIO1_0 => disable pull-up/down
-    LPC13XX_IOCON->PIO1_1          =  ( 0x1 <<  0 ) |        // Table 126: PIO1_1 => configure as GPIO
-                                      ( 0x0 <<  3 ) ;        //          : PIO1_1 => disable pull-up/down
-    LPC13XX_IOCON->PIO0_1          =  ( 0x0 <<  0 ) |        // Table 100: PIO0_1 => configure as GPIO
-                                      ( 0x2 <<  3 ) ;        //          : PIO0_1 =>  enable pull-up
-  
-    LPC13XX_IOCON->PIO1_6          =  ( 0x1 <<  0 ) |        // Table 136: PIO1_6 => configure as UART RxD
-                                      ( 0x0 <<  3 ) ;        //          : PIO1_6 => disable pull-up/down
-    LPC13XX_IOCON->PIO1_7          =  ( 0x1 <<  0 ) |        // Table 137: PIO1_7 => configure as UART TxD
-                                      ( 0x0 <<  3 ) ;        //          : PIO1_7 => disable pull-up/down
+    LPC13XX_SYSCON->SYSAHBCLKCTRL |=  ( 0x1 << 16 ) ;         // Table  25:  enable IOCON clock
 
-    LPC13XX_IOCON->PIO0_4          =  ( 0x1 <<  0 ) |        // Table 107: PIO0_4 => configure as I2C (SCL)
-                                      ( 0x2 <<  8 ) ;        //          : PIO0_4 => configure in fast mode plus (@ 1MHz)
-    LPC13XX_IOCON->PIO0_5          =  ( 0x1 <<  0 ) |        // Table 108: PIO0_5 => configure as I2C (SDA)
-                                      ( 0x2 <<  8 ) ;        //          : PIO0_5 => configure in fast mode plus (@ 1MHz)
+    LPC13XX_IOCON->PIO1_0          =  ( 0x1 <<  0 ) |         // Table 125: PIO1_0 => configure as GPIO
+                                      ( 0x0 <<  3 ) ;         //          : PIO1_0 => disable pull-up/down
+    LPC13XX_IOCON->PIO1_1          =  ( 0x1 <<  0 ) |         // Table 126: PIO1_1 => configure as GPIO
+                                      ( 0x0 <<  3 ) ;         //          : PIO1_1 => disable pull-up/down
+    LPC13XX_IOCON->PIO0_1          =  ( 0x0 <<  0 ) |         // Table 100: PIO0_1 => configure as GPIO
+                                      ( 0x2 <<  3 ) ;         //          : PIO0_1 =>  enable pull-up
+  
+    LPC13XX_IOCON->PIO1_6          =  ( 0x1 <<  0 ) |         // Table 136: PIO1_6 => configure as UART RxD
+                                      ( 0x0 <<  3 ) ;         //          : PIO1_6 => disable pull-up/down
+    LPC13XX_IOCON->PIO1_7          =  ( 0x1 <<  0 ) |         // Table 137: PIO1_7 => configure as UART TxD
+                                      ( 0x0 <<  3 ) ;         //          : PIO1_7 => disable pull-up/down
+
+    LPC13XX_IOCON->PIO0_4          =  ( 0x1 <<  0 ) |         // Table 107: PIO0_4 => configure as I2C (SCL)
+                                      ( 0x2 <<  8 ) ;         //          : PIO0_4 => configure in fast mode plus (@ 1MHz)
+    LPC13XX_IOCON->PIO0_5          =  ( 0x1 <<  0 ) |         // Table 108: PIO0_5 => configure as I2C (SDA)
+                                      ( 0x2 <<  8 ) ;         //          : PIO0_5 => configure in fast mode plus (@ 1MHz)
+
+    LPC13XX_SYSCON->SYSAHBCLKCTRL |=  ( 0x1 <<  5 ) ;         // Table  25:  enable I2C   clock
+    LPC13XX_SYSCON->SYSAHBCLKCTRL |=  ( 0x1 <<  6 ) ;         // Table  25:  enable GPIO  clock
+    LPC13XX_SYSCON->SYSAHBCLKCTRL |=  ( 0x1 << 12 ) ;         // Table  25:  enable UART  clock
+
+    LPC13XX_SYSCON->PRESETCTRL    &= ~( 0x1 <<  1 ) ;         // Table  19:  enable reset I2C
+    LPC13XX_SYSCON->PRESETCTRL    |=  ( 0x1 <<  1 ) ;         // Table  19: disable reset I2C
 
   /* Section 3.4 gives a complete overview of clock generation; it highlights
    * the existence of three oscillators, of which two are pertinent:
@@ -164,57 +164,63 @@ bool scale_init( scale_conf_t* conf ) {
 
   if     ( ( scale_conf.clock_freq_source >=  1 ) && 
            ( scale_conf.clock_freq_source <= 20 ) ) {
-    LPC13XX_SYSCON->SYSOSCCTRL     =  ( 0x0 <<  0 ) |        // Table 14: configure  system oscillator => not bypassed
-                                      ( 0x0 <<  1 ) ;        // Table 14: configure  system oscillator =>  1-20 MHz
+    LPC13XX_SYSCON->SYSOSCCTRL     =  ( 0x0 <<  0 ) |         // Table 14: configure  system oscillator => not bypassed
+                                      ( 0x0 <<  1 ) ;         // Table 14: configure  system oscillator =>  1-20 MHz
   }
   else if( ( scale_conf.clock_freq_source >= 15 ) && 
            ( scale_conf.clock_freq_source <= 25 ) ) {
-    LPC13XX_SYSCON->SYSOSCCTRL     =  ( 0x0 <<  0 ) |        // Table 14: configure  system oscillator => not bypassed
-                                      ( 0x1 <<  1 ) ;        // Table 14: configure  system oscillator => 15-25 MHz
+    LPC13XX_SYSCON->SYSOSCCTRL     =  ( 0x0 <<  0 ) |         // Table 14: configure  system oscillator => not bypassed
+                                      ( 0x1 <<  1 ) ;         // Table 14: configure  system oscillator => 15-25 MHz
   }
 
   if( scale_conf.clock_type == SCALE_CLOCK_TYPE_INT ) {
-    LPC13XX_SYSCON->PDRUNCFG      |=  ( 0x1 <<  5 ) ;        // Table 55: power-down system oscillator
+    LPC13XX_SYSCON->PDRUNCFG      |=  ( 0x1 <<  5 ) ;         // Table 55: power-down system oscillator
   }
   else {
-    LPC13XX_SYSCON->PDRUNCFG      &= ~( 0x1 <<  5 ) ;        // Table 55: power-up   system oscillator
+    LPC13XX_SYSCON->PDRUNCFG      &= ~( 0x1 <<  5 ) ;         // Table 55: power-up   system oscillator
   }
   
   for( int i = 0; i < 200; i++ ) {
     __asm__ __volatile__( "nop" );
   }
 
-    LPC13XX_SYSCON->SYSPLLCLKSEL   = SYSPLLCLKSEL;           // Table 18: set system PLL input
+    LPC13XX_SYSCON->SYSPLLCLKSEL   = SYSPLLCLKSEL;            // Table 18: set system PLL input
   
-    LPC13XX_SYSCON->SYSPLLCLKUEN  |=  ( 0x1 <<  0 ) ;        // Section 3.5.12: update 
-    LPC13XX_SYSCON->SYSPLLCLKUEN  &= ~( 0x1 <<  0 ) ;        // Section 3.5.12: toggle
-    LPC13XX_SYSCON->SYSPLLCLKUEN  |=  ( 0x1 <<  0 ) ;        // Section 3.5.12: update 
+    LPC13XX_SYSCON->SYSPLLCLKUEN  |=  ( 0x1 <<  0 ) ;         // Section 3.5.12: update 
+    LPC13XX_SYSCON->SYSPLLCLKUEN  &= ~( 0x1 <<  0 ) ;         // Section 3.5.12: toggle
+    LPC13XX_SYSCON->SYSPLLCLKUEN  |=  ( 0x1 <<  0 ) ;         // Section 3.5.12: update 
   
-  while( !( LPC13XX_SYSCON->SYSPLLCLKUEN & ( 0x1 << 0 ) ) ); // Section 3.5.12: wait for update
+  while( !( LPC13XX_SYSCON->SYSPLLCLKUEN & ( 0x1 << 0 ) ) ) { // Section 3.5.12: wait for update
+    /* skip */
+  }
 
-    LPC13XX_SYSCON->SYSPLLCTRL     = SYSPLLCTRL;             // Table 10: configure system PLL => MSEL | ( PSEL << 5 )
-    LPC13XX_SYSCON->PDRUNCFG      &= ~( 0x1 <<  7 ) ;        // Table 55: power-up  system PLL
+    LPC13XX_SYSCON->SYSPLLCTRL     = SYSPLLCTRL;              // Table 10: configure system PLL => MSEL | ( PSEL << 5 )
+    LPC13XX_SYSCON->PDRUNCFG      &= ~( 0x1 <<  7 ) ;         // Table 55: power-up  system PLL
   
-  while( !( LPC13XX_SYSCON->SYSPLLSTAT   & ( 0x1 << 0 ) ) ); // Section 3.5.4:  wait for update
+  while( !( LPC13XX_SYSCON->SYSPLLSTAT   & ( 0x1 << 0 ) ) ) { // Section 3.5.4:  wait for update
+    /* skip */
+  }
 
-    LPC13XX_SYSCON->MAINCLKSEL     = MAINCLKSEL;             // Table 22: set main system clock
+    LPC13XX_SYSCON->MAINCLKSEL     = MAINCLKSEL;              // Table 22: set main system clock
   
-    LPC13XX_SYSCON->MAINCLKUEN    |=  ( 0x1 <<  0 ) ;        // Section 3.5.15: update 
-    LPC13XX_SYSCON->MAINCLKUEN    &= ~( 0x1 <<  0 ) ;        // Section 3.5.15: toggle
-    LPC13XX_SYSCON->MAINCLKUEN    |=  ( 0x1 <<  0 ) ;        // Section 3.5.15: update 
+    LPC13XX_SYSCON->MAINCLKUEN    |=  ( 0x1 <<  0 ) ;         // Section 3.5.15: update 
+    LPC13XX_SYSCON->MAINCLKUEN    &= ~( 0x1 <<  0 ) ;         // Section 3.5.15: toggle
+    LPC13XX_SYSCON->MAINCLKUEN    |=  ( 0x1 <<  0 ) ;         // Section 3.5.15: update 
   
-  while( !( LPC13XX_SYSCON->MAINCLKUEN   & ( 0x1 << 0 ) ) ); // Section 3.5.15: wait for update
+  while( !( LPC13XX_SYSCON->MAINCLKUEN   & ( 0x1 << 0 ) ) ) { // Section 3.5.15: wait for update
+    /* skip */
+  }
 
-    LPC13XX_SYSCON->SYSAHBCLKDIV   = SYSAHBCLKDIV;           // Table 24: set AHB clock divider
+    LPC13XX_SYSCON->SYSAHBCLKDIV   = SYSAHBCLKDIV;            // Table 24: set AHB clock divider
 
   if     ( scale_conf.clock_freq_target <= 20 ) {
-    LPC13XX_FMC->FLASHCFG          =  ( 0x0 <<  0 ) ;        // Table 59: configure flash memory => upto 20 MHz main system clock
+    LPC13XX_FMC->FLASHCFG          =  ( 0x0 <<  0 ) ;         // Table 59: configure flash memory => upto 20 MHz main system clock
   }
   else if( scale_conf.clock_freq_target <= 40 ) {
-    LPC13XX_FMC->FLASHCFG          =  ( 0x1 <<  0 ) ;        // Table 59: configure flash memory => upto 40 MHz main system clock
+    LPC13XX_FMC->FLASHCFG          =  ( 0x1 <<  0 ) ;         // Table 59: configure flash memory => upto 40 MHz main system clock
   }
   else if( scale_conf.clock_freq_target <= 50 ) {
-    LPC13XX_FMC->FLASHCFG          =  ( 0x2 <<  0 ) ;        // Table 59: configure flash memory => upto 72 MHz main system clock
+    LPC13XX_FMC->FLASHCFG          =  ( 0x2 <<  0 ) ;         // Table 59: configure flash memory => upto 72 MHz main system clock
   }
 
   /* Chapter  9 details the (GP)I/O ports.
@@ -223,12 +229,12 @@ bool scale_init( scale_conf_t* conf ) {
    * initial value.
    */
 
-    LPC13XX_GPIO1->GPIODIR        |=  ( 0x1 <<  0 ) ;        // Table 175: PIO1_0 => configure as SCALE_GPIO_PIN_TRG (output)
-    LPC13XX_GPIO1->GPIODIR        |=  ( 0x1 <<  1 ) ;        // Table 175: PIO1_1 => configure as SCALE_GPIO_PIN_GPO (output)
-    LPC13XX_GPIO0->GPIODIR        &= ~( 0x1 <<  1 ) ;        // Table 175: PIO0_1 => configure as SCALE_GPIO_PIN_GPI  (input)
+    LPC13XX_GPIO1->GPIODIR        |=  ( 0x1 <<  0 ) ;         // Table 175: PIO1_0 => configure as SCALE_GPIO_PIN_TRG (output)
+    LPC13XX_GPIO1->GPIODIR        |=  ( 0x1 <<  1 ) ;         // Table 175: PIO1_1 => configure as SCALE_GPIO_PIN_GPO (output)
+    LPC13XX_GPIO0->GPIODIR        &= ~( 0x1 <<  1 ) ;         // Table 175: PIO0_1 => configure as SCALE_GPIO_PIN_GPI  (input)
 
-    LPC13XX_GPIO1->GPIODATA       &= ~( 0x1 <<  0 ) ;        // initialise SCALE_GPIO_PIN_TRG = 0
-    LPC13XX_GPIO1->GPIODATA       &= ~( 0x1 <<  1 ) ;        // initialise SCALE_GPIO_PIN_GPO = 0
+    LPC13XX_GPIO1->GPIODATA       &= ~( 0x1 <<  0 ) ;         // initialise SCALE_GPIO_PIN_TRG = 0
+    LPC13XX_GPIO1->GPIODATA       &= ~( 0x1 <<  1 ) ;         // initialise SCALE_GPIO_PIN_GPO = 0
 
   /* Chapter 12 details the UART.
    * 
@@ -254,16 +260,23 @@ bool scale_init( scale_conf_t* conf ) {
 
     LPC13XX_SYSCON->UARTCLKDIV     = scale_conf.clock_freq_target;
   
-    LPC13XX_UART->U0LCR           |=  ( 0x1 <<  7 ) ;        // Table 193:  enable divisor latch access
-    LPC13XX_UART->U0FDR            =  ( 0x5 <<  0 ) ;        // Table 200: set DivAddVal
-    LPC13XX_UART->U0FDR           |=  ( 0x8 <<  4 ) ;        // Table 200: set    MulVal
-    LPC13XX_UART->U0DLM            =  ( 0x0 <<  0 ) ;        // Table 187: set divisor latch MSBs
-    LPC13XX_UART->U0DLL            =  ( 0x4 <<  0 ) ;        // Table 187: set divisor latch LSBs
-    LPC13XX_UART->U0LCR           &= ~( 0x1 <<  7 ) ;        // Table 193: disable divisor latch access 
+    LPC13XX_UART->U0LCR           |=  ( 0x1 <<  7 ) ;         // Table 193:  enable divisor latch access
+    LPC13XX_UART->U0FDR            =  ( 0x5 <<  0 ) ;         // Table 200: set DivAddVal
+    LPC13XX_UART->U0FDR           |=  ( 0x8 <<  4 ) ;         // Table 200: set    MulVal
+    LPC13XX_UART->U0DLM            =  ( 0x0 <<  0 ) ;         // Table 187: set divisor latch MSBs
+    LPC13XX_UART->U0DLL            =  ( 0x4 <<  0 ) ;         // Table 187: set divisor latch LSBs
+    LPC13XX_UART->U0LCR           &= ~( 0x1 <<  7 ) ;         // Table 193: disable divisor latch access 
   
-    LPC13XX_UART->U0LCR           |=  ( 0x3 <<  0 ) ;        // Table 193: 8 data bits
-    LPC13XX_UART->U0LCR           &= ~( 0x1 <<  3 ) ;        // Table 193: no parity
-    LPC13XX_UART->U0LCR           &= ~( 0x1 <<  2 ) ;        // Table 193: 1 stop bits
+    LPC13XX_UART->U0LCR           |=  ( 0x3 <<  0 ) ;         // Table 193: 8 data bits
+    LPC13XX_UART->U0LCR           &= ~( 0x1 <<  3 ) ;         // Table 193: no parity
+    LPC13XX_UART->U0LCR           &= ~( 0x1 <<  2 ) ;         // Table 193: 1 stop bits
+
+  while(  scale_uart_rd_avail() ) { // flush, ready to read
+    scale_uart_rd( SCALE_UART_MODE_NONBLOCKING );
+  }
+  while( !scale_uart_wr_avail() ) { // flush, ready to write
+    /* skip */
+  }
 
   /* Chapter 13 details the I2C interface.
    *
@@ -278,10 +291,10 @@ bool scale_init( scale_conf_t* conf ) {
 
   uint32_t SCL = ( 10 * scale_conf.clock_freq_target ) / 2;
 
-    LPC13XX_I2C->I2C0SCLL          = SCL;                    // Table 222: set -ve, low  duty cycle
-    LPC13XX_I2C->I2C0SCLH          = SCL;                    // Table 221: set +ve, high duty cycle
+    LPC13XX_I2C->I2C0SCLL          = SCL;                     // Table 222: set -ve, low  duty cycle
+    LPC13XX_I2C->I2C0SCLH          = SCL;                     // Table 221: set +ve, high duty cycle
   
-    LPC13XX_I2C->I2C0CONSET        =  ( 0x1 <<  6 ) ;        // Table 217:  enable interface
+    LPC13XX_I2C->I2C0CONSET        =  ( 0x1 <<  6 ) ;         // Table 217:  enable interface
 
   return true;
 }
@@ -368,13 +381,25 @@ void scale_gpio_wr( scale_gpio_pin_t id, bool x ) {
   return;
 }
 
-uint8_t scale_uart_rd(           ) {
-  while( !( LPC13XX_UART->U0LSR & ( 0x1 << 0 ) ) );
+bool scale_uart_rd_avail() {
+  return LPC13XX_UART->U0LSR & ( 0x1 << 0 );
+}
+
+bool scale_uart_wr_avail() {
+  return LPC13XX_UART->U0LSR & ( 0x1 << 5 );
+}
+
+uint8_t scale_uart_rd( scale_uart_mode_t mode            ) {
+  while( ( mode == SCALE_UART_MODE_BLOCKING ) && !scale_uart_rd_avail() ) {
+    /* skip */
+  }
   return ( LPC13XX_UART->U0RBR     );
 }
 
-void    scale_uart_wr( uint8_t x ) {
-  while( !( LPC13XX_UART->U0LSR & ( 0x1 << 5 ) ) );
+void    scale_uart_wr( scale_uart_mode_t mode, uint8_t x ) {
+  while( ( mode == SCALE_UART_MODE_BLOCKING ) && !scale_uart_wr_avail() ) {
+    /* skip */
+  }
          ( LPC13XX_UART->U0THR = x );
   return;
 }
