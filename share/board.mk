@@ -4,7 +4,7 @@
 # which can be found via http://creativecommons.org (and should be included 
 # as LICENSE.txt within the associated archive or repository).
 
-BOARD_SOURCES  = board.sch
+BOARD_SOURCES += board.sch
 BOARD_SOURCES += board.brd
 BOARD_SOURCES += board.lbr
 BOARD_SOURCES += board.csv

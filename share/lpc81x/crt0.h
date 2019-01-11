@@ -5,9 +5,7 @@
  * as LICENSE.txt within the associated archive or repository).
  */
 
-MEMORY {
-  rom (rx)  : ORIGIN = 0x00000000, LENGTH = 16K
-  ram (rwx) : ORIGIN = 0x10000000, LENGTH =  4K
-}
+#ifndef __CRT0_H
+#define __CRT0_H
 
-INCLUDE lpc81x.ld
+#endif

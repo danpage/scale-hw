@@ -16,35 +16,33 @@ endif
 
 include ${BSP}/lib/scale.conf
 
-INCLUDES    =
+PROJECT_INCLUDES += 
 
-HEADERS     = ${PROJECT}.h
-SOURCES     = ${PROJECT}.c
+PROJECT_HEADERS  += ${PROJECT}.h
+PROJECT_SOURCES  += ${PROJECT}.c
 
-TARGETS     = ${PROJECT}.map
-TARGETS    += ${PROJECT}.elf
-TARGETS    += ${PROJECT}.bin
-TARGETS    += ${PROJECT}.hex
+PROJECT_TARGETS  += ${PROJECT}.map
+PROJECT_TARGETS  += ${PROJECT}.elf
+PROJECT_TARGETS  += ${PROJECT}.bin
+PROJECT_TARGETS  += ${PROJECT}.hex
 
-GCC_PREFIX  = avr-
-GCC_FLAGS   = ${SCALE_CONF} -Wall -std=gnu99 -Os -mmcu=atmega328p
-GCC_PATHS   = -I ${BSP}/include -L ${BSP}/lib
-GCC_LIBS    = -lscale
+GCC_PATHS        += -I ${BSP}/include -L ${BSP}/lib
+GCC_LIBS         += -lscale
 
-%.elf %.map : ${SOURCES} ${HEADERS}
-	@${GCC_PREFIX}gcc $(patsubst %, -I %, ${INCLUDES}) ${GCC_PATHS} ${GCC_FLAGS} -Wl,-Map=${*}.map -o ${*}.elf ${SOURCES} ${GCC_LIBS}
+%.elf %.map : ${PROJECT_SOURCES} ${PROJECT_HEADERS}
+	@${GCC_PREFIX}gcc $(patsubst %, -I %, ${PROJECT_INCLUDES}) ${GCC_PATHS} ${GCC_FLAGS} ${SCALE_CONF} -Wl,-Map=${*}.map -o ${*}.elf ${PROJECT_SOURCES} ${GCC_LIBS}
 %.bin       : %.elf
 	@${GCC_PREFIX}objcopy -S -j .text -j .data -O binary ${<} ${@}
 %.hex       : %.elf
 	@${GCC_PREFIX}objcopy -S -j .text -j .data -O ihex   ${<} ${@}
 
-all     : ${TARGETS}
+all     : ${PROJECT_TARGETS}
 
 clean   :
-	@rm -f ${TARGETS}
+	@rm -f ${PROJECT_TARGETS}
 
-program : ${TARGETS}
+program : ${PROJECT_TARGETS}
 	@avrdude -v -e -V -P ${USB} -c arduino -p m328p -U flash:w:$(filter %.hex, ${^})
 
-fuse    : ${TARGETS}
+fuse    : ${PROJECT_TARGETS}
 	@avrdude -v -e -V -P ${USB} -c arduino -p m328p ${SCALE_FUSE}

@@ -16,7 +16,9 @@
 scale_conf_t SCALE_CONF = {
   .clock_type        = SCALE_CLOCK_TYPE,
   .clock_freq_source = SCALE_CLOCK_FREQ_SOURCE,
-  .clock_freq_target = SCALE_CLOCK_FREQ_TARGET
+  .clock_freq_target = SCALE_CLOCK_FREQ_TARGET,
+
+  .tsc               = false
 };
 
 bool scale_init( scale_conf_t* conf ) {
@@ -145,6 +147,10 @@ void scale_delay_ms( int ms ) {
   }
 
   return;
+}
+
+scale_tsc_t scale_tsc() {
+  return 0;
 }
 
 bool scale_gpio_rd( scale_gpio_pin_t id         ) {

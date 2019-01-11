@@ -4,3 +4,8 @@
  * which can be found via http://creativecommons.org (and should be included 
  * as LICENSE.txt within the associated archive or repository).
  */
+
+#ifndef __CRT0_H
+#define __CRT0_H
+
+#endif

@@ -188,6 +188,16 @@ typedef struct {
           RO uint32_t COMMASK3;          // 0x003C          : slave address mask 3
 } lpc111x_i2c_dev_t;
 
+// Chapter 24, Section 24.5, Table 357: system tick timer                                                                                                                                                                                    
+
+typedef struct {
+          RO RSVD(  0, 0x0000, 0x000F ); // 0x0004...0x000F : reserved                                                                                                                                                                        
+          RW uint32_t CTRL;              // 0x0010          : control and status                                                                                                                                                              
+          RW uint32_t LOAD;              // 0x0014          :      reload value                                                                                                                                                               
+          RW uint32_t VAL;               // 0x0018          :     current value                                                                                                                                                               
+          RO uint32_t CALIB;             // 0x001C          : calibration value                                                                                                                                                               
+} lpc111x_systick_dev_t;
+
 // Chapter 26, Section 26.9/10, Table 408/409: flash controller
 
 typedef struct { 
@@ -207,14 +217,25 @@ typedef struct {
           RO uint32_t FMSSTATCLR;        // 0x0FE8          : signature status clear
 } lpc111x_fmc_dev_t;
 
-extern lpc111x_syscon_dev_t* LPC111X_SYSCON;
-extern lpc111x_iocon_dev_t*  LPC111X_IOCON;
-extern lpc111x_gpio_dev_t*   LPC111X_GPIO0;
-extern lpc111x_gpio_dev_t*   LPC111X_GPIO1;
-extern lpc111x_gpio_dev_t*   LPC111X_GPIO2;
-extern lpc111x_gpio_dev_t*   LPC111X_GPIO3;
-extern lpc111x_uart_dev_t*   LPC111X_UART;
-extern lpc111x_i2c_dev_t*    LPC111X_I2C;
-extern lpc111x_fmc_dev_t*    LPC111X_FMC;
+extern lpc111x_syscon_dev_t*  LPC111X_SYSCON;
+extern lpc111x_iocon_dev_t*   LPC111X_IOCON;
+extern lpc111x_gpio_dev_t*    LPC111X_GPIO0;
+extern lpc111x_gpio_dev_t*    LPC111X_GPIO1;
+extern lpc111x_gpio_dev_t*    LPC111X_GPIO2;
+extern lpc111x_gpio_dev_t*    LPC111X_GPIO3;
+extern lpc111x_uart_dev_t*    LPC111X_UART;
+extern lpc111x_i2c_dev_t*     LPC111X_I2C;
+extern lpc111x_fmc_dev_t*     LPC111X_FMC;
+
+extern lpc111x_systick_dev_t* LPC111X_SYSTICK;
+
+#if defined( LPC111X_SYSTICK_56BIT )
+extern uint32_t lpc111x_tsc;
+#endif
+
+//  enable interrupts                                                                                                                                                                                                                         
+extern void     lpc111x_irq_enable();
+// disable interrupts                                                                                                                                                                                                                         
+extern void     lpc111x_irq_unable();
 
 #endif

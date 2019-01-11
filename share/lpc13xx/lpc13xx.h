@@ -203,6 +203,16 @@ typedef struct {
           RO uint32_t I2C0COMMASK3;      // 0x003C          : slave address mask 3
 } lpc13xx_i2c_dev_t;
 
+// Chapter 17, Section 17.16, Table 284: system tick timer
+
+typedef struct {
+          RO RSVD(  0, 0x0000, 0x000F ); // 0x0004...0x000F : reserved
+          RW uint32_t CTRL;              // 0x0010          : control and status
+          RW uint32_t LOAD;              // 0x0014          :      reload value
+          RW uint32_t VAL;               // 0x0018          :     current value
+          RO uint32_t CALIB;             // 0x001C          : calibration value
+} lpc13xx_systick_dev_t;
+
 // Chapter 21, Section 21.16, Table 346: flash controller
 
 typedef struct { 
@@ -222,14 +232,25 @@ typedef struct {
           RO uint32_t FMSSTATCLR;        // 0x0FE8          : signature status clear
 } lpc13xx_fmc_dev_t;
 
-extern lpc13xx_syscon_dev_t* LPC13XX_SYSCON;
-extern lpc13xx_iocon_dev_t*  LPC13XX_IOCON;
-extern lpc13xx_gpio_dev_t*   LPC13XX_GPIO0;
-extern lpc13xx_gpio_dev_t*   LPC13XX_GPIO1;
-extern lpc13xx_gpio_dev_t*   LPC13XX_GPIO2;
-extern lpc13xx_gpio_dev_t*   LPC13XX_GPIO3;
-extern lpc13xx_uart_dev_t*   LPC13XX_UART;
-extern lpc13xx_i2c_dev_t*    LPC13XX_I2C;
-extern lpc13xx_fmc_dev_t*    LPC13XX_FMC;
+extern lpc13xx_syscon_dev_t*  LPC13XX_SYSCON;
+extern lpc13xx_iocon_dev_t*   LPC13XX_IOCON;
+extern lpc13xx_gpio_dev_t*    LPC13XX_GPIO0;
+extern lpc13xx_gpio_dev_t*    LPC13XX_GPIO1;
+extern lpc13xx_gpio_dev_t*    LPC13XX_GPIO2;
+extern lpc13xx_gpio_dev_t*    LPC13XX_GPIO3;
+extern lpc13xx_uart_dev_t*    LPC13XX_UART;
+extern lpc13xx_i2c_dev_t*     LPC13XX_I2C;
+extern lpc13xx_fmc_dev_t*     LPC13XX_FMC;
+
+extern lpc13xx_systick_dev_t* LPC13XX_SYSTICK;
+
+#if defined( LPC13XX_SYSTICK_56BIT )
+extern uint32_t lpc13xx_tsc;
+#endif
+
+//  enable interrupts
+extern void     lpc13xx_irq_enable();
+// disable interrupts
+extern void     lpc13xx_irq_unable();
 
 #endif

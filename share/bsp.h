@@ -36,6 +36,8 @@ typedef enum {
   SCALE_CLOCK_FREQ_32MHZ = 32
 } scale_clock_freq_t;
 
+typedef uint64_t scale_tsc_t;
+
 typedef enum {
   SCALE_GPIO_PIN_TRG,
   SCALE_GPIO_PIN_GPO,
@@ -65,6 +67,8 @@ typedef struct {
   scale_clock_type_t clock_type;
   scale_clock_freq_t clock_freq_source;
   scale_clock_freq_t clock_freq_target;
+
+  bool               tsc;
 } scale_conf_t;
 
 // default configuration
@@ -79,6 +83,9 @@ extern bool               scale_init( scale_conf_t* conf );
 extern void               scale_delay_us( int us );
 // delay (i.e., wait) for some number of milliseconds
 extern void               scale_delay_ms( int ms );
+
+// read Time Stamp Counter (TSC), or "cycle count"
+extern scale_tsc_t        scale_tsc();
 
 // read  (or sample) GPIO pin 
 extern bool               scale_gpio_rd( scale_gpio_pin_t id         );

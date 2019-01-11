@@ -4,13 +4,19 @@
 # which can be found via http://creativecommons.org (and should be included 
 # as LICENSE.txt within the associated archive or repository).
 
+vpath %.h .:../../share:../../share/atmega328p
+vpath %.c .:../../share:../../share/atmega328p
+vpath %.s .:../../share:../../share/atmega328p
+vpath %.S .:../../share:../../share/atmega328p
+
 include scale.conf
 
-BSP_HEADERS   = ../../share/atmega328p.h
-BSP_SOURCES   = ../../share/atmega328p.c
+BSP_INCLUDES =            ../../share/atmega328p
 
-GCC_PREFIX    = avr-
-GCC_FLAGS     = ${SCALE_CONF} -Wall -std=gnu99 -Os -mmcu=atmega328p
+BSP_HEADERS  = $(wildcard ../../share/atmega328p/*.h )
+BSP_SOURCES  = $(wildcard ../../share/atmega328p/*.S )
+
+BSP_SCRIPTS  = $(wildcard ../../share/atmega328p/*.ld)
 
 include ../../share/bsp.mk
 include ../../share/board.mk

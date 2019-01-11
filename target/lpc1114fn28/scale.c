@@ -16,7 +16,9 @@
 scale_conf_t SCALE_CONF = {
   .clock_type        = SCALE_CLOCK_TYPE_INT,
   .clock_freq_source = SCALE_CLOCK_FREQ_12MHZ,
-  .clock_freq_target = SCALE_CLOCK_FREQ_12MHZ
+  .clock_freq_target = SCALE_CLOCK_FREQ_12MHZ,
+
+  .tsc               = true
 };
 
 bool scale_init( scale_conf_t* conf ) {
@@ -296,6 +298,43 @@ bool scale_init( scale_conf_t* conf ) {
   
     LPC111X_I2C->CONSET            =  ( 0x1 <<  6 ) ;         // Table 220:  enable interface
 
+  /* Chapter 24 details the system tick (or systick) timer.
+   * 
+   * Figure 90 outlines the structure of the systick timer, which we used as
+   * a cycle-accurate Time Stamp Counter (TSC) by driving it with the system 
+   * clock.  Note that the timer uses a 24-bit counter, so, at 16 MHz for 
+   * example, offers at most a
+   *
+   * 2^24 cycles / ( 16 * 10^6 ) ~= 1 second
+   *
+   * useful duration.
+   */
+
+    LPC111X_SYSTICK->LOAD          =  0x00FFFFFF;             // Table 286: set  reload value to maximum
+    LPC111X_SYSTICK->VAL           =  0x00FFFFFF;             // Table 287: set current value to maximum
+
+  if( conf->tsc ) {
+    #if defined( LPC111X_SYSTICK_56BIT )
+    LPC111X_SYSTICK->CTRL          =  ( 0x1 <<  0 ) |         // Table 285:  enable systick
+                                      ( 0x1 <<  1 ) |         // Table 285:  enable systick interrupt
+                                      ( 0x1 <<  2 ) ;         // Table 285:     set systick clock = system clock
+    #else
+    LPC111X_SYSTICK->CTRL          =  ( 0x1 <<  0 ) |         // Table 285:  enable systick
+                                      ( 0x0 <<  1 ) |         // Table 285: disable systick interrupt
+                                      ( 0x1 <<  2 ) ;         // Table 285:     set systick clock = system clock
+    #endif
+    #if defined( LPC111X_SYSTICK_56BIT )
+    lpc111x_tsc                    =  0xFFFFFFFF;
+    #endif
+  }
+  else {
+    LPC111X_SYSTICK->CTRL          =  ( 0x0 <<  0 ) |         // Table 285: disable systick
+                                      ( 0x0 <<  1 ) |         // Table 285: disable systick interrupt
+                                      ( 0x1 <<  2 ) ;         // Table 285:     set systick clock = system clock
+  }
+
+  lpc111x_irq_enable();
+
   return true;
 }
 
@@ -333,6 +372,14 @@ void scale_delay_ms( int ms ) {
   }
 
   return;
+}
+
+scale_tsc_t scale_tsc() {
+  #if defined( LPC111X_SYSTICK_56BIT )
+  return ( ( scale_tsc_t )( lpc111x_tsc ) << 24 ) | ( scale_tsc_t )( LPC111X_SYSTICK->VAL );
+  #else
+  return                                            ( scale_tsc_t )( LPC111X_SYSTICK->VAL );
+  #endif
 }
 
 bool scale_gpio_rd( scale_gpio_pin_t id         ) {

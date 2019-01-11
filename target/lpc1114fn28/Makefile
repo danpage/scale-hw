@@ -4,13 +4,19 @@
 # which can be found via http://creativecommons.org (and should be included 
 # as LICENSE.txt within the associated archive or repository).
 
+vpath %.h .:../../share:../../share/lpc111x
+vpath %.c .:../../share:../../share/lpc111x
+vpath %.s .:../../share:../../share/lpc111x
+vpath %.S .:../../share:../../share/lpc111x
+
 include scale.conf
 
-BSP_HEADERS   = ../../share/lpc111x.h
-BSP_SOURCES   = ../../share/lpc111x.c
+BSP_INCLUDES =            ../../share/lpc111x
 
-GCC_PREFIX    = arm-none-eabi-
-GCC_FLAGS     = ${SCALE_CONF} -Wall -std=gnu99 -Os -mcpu=cortex-m0 -mthumb
+BSP_HEADERS  = $(wildcard ../../share/lpc111x/*.h )
+BSP_SOURCES  = $(wildcard ../../share/lpc111x/*.S )
+
+BSP_SCRIPTS  = $(wildcard ../../share/lpc111x/*.ld)
 
 include ../../share/bsp.mk
 include ../../share/board.mk

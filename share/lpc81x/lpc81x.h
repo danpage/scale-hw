@@ -144,6 +144,16 @@ typedef struct {
           RW uint32_t PINENABLE0;        // 0x01C0          : pin enable register 0
 } lpc81x_swm_dev_t;
 
+// Chapter 14, Section 14.6, Table 166: system tick timer
+
+typedef struct {
+          RO RSVD(  0, 0x0000, 0x000F ); // 0x0004...0x000F : reserved
+          RW uint32_t SYST_CSR;          // 0x0010          : control and status
+          RW uint32_t SYST_RVR;          // 0x0014          :      reload value
+          RW uint32_t SYST_CVR;          // 0x0018          :     current value
+          RO uint32_t SYST_CALIB;        // 0x001C          : calibration value
+} lpc81x_systick_dev_t;
+
 // Chapter 15, Section 15.6, Table 172: UART
 
 typedef struct {
@@ -197,14 +207,25 @@ typedef struct {
           RO uint32_t FMSW0;             // 0x002C          : word 0
 } lpc81x_fmc_dev_t;
 
-extern lpc81x_syscon_dev_t* LPC81X_SYSCON;
-extern lpc81x_iocon_dev_t*  LPC81X_IOCON;
-extern lpc81x_gpio_dev_t*   LPC81X_GPIO;
-extern lpc81x_swm_dev_t*    LPC81X_SWM;
-extern lpc81x_uart_dev_t*   LPC81X_UART0;
-extern lpc81x_uart_dev_t*   LPC81X_UART1;
-extern lpc81x_uart_dev_t*   LPC81X_UART2;
-extern lpc81x_i2c_dev_t*    LPC81X_I2C;
-extern lpc81x_fmc_dev_t*    LPC81X_FMC;
+extern lpc81x_syscon_dev_t*  LPC81X_SYSCON;
+extern lpc81x_iocon_dev_t*   LPC81X_IOCON;
+extern lpc81x_gpio_dev_t*    LPC81X_GPIO;
+extern lpc81x_swm_dev_t*     LPC81X_SWM;
+extern lpc81x_uart_dev_t*    LPC81X_UART0;
+extern lpc81x_uart_dev_t*    LPC81X_UART1;
+extern lpc81x_uart_dev_t*    LPC81X_UART2;
+extern lpc81x_i2c_dev_t*     LPC81X_I2C;
+extern lpc81x_fmc_dev_t*     LPC81X_FMC;
+
+extern lpc81x_systick_dev_t* LPC81X_SYSTICK;
+
+#if defined( LPC81X_SYSTICK_56BIT )
+extern uint32_t lpc81x_tsc;
+#endif
+
+//  enable interrupts                                                                                                                                                                                                                        $
+extern void     lpc81x_irq_enable();
+// disable interrupts                                                                                                                                                                                                                        $
+extern void     lpc81x_irq_unable();
 
 #endif
