@@ -4,7 +4,8 @@
 # which can be found via http://creativecommons.org (and should be included 
 # as LICENSE.txt within the associated archive or repository).
 
-BSP_DIRS     += ./build/lib ./build/include/scale
+BSP_DIRS     += ./build/lib 
+BSP_DIRS     += ./build/include/scale
 
 BSP_INCLUDES += ./        
 BSP_INCLUDES += ../../share
@@ -28,7 +29,7 @@ BSP_TARGETS  += $(addprefix ./build/lib/,           $(notdir                    
 .PRECIOUS: ${BSP_OBJECTS}
 
 ${BSP_DIRS} :
-	@mkdir -p ${@}
+	@mkdir --parents ${@}
 
 ./build/lib/%.o : %.c %.h
 	@${GCC_PREFIX}gcc $(patsubst %, -I %, ${BSP_INCLUDES}) ${GCC_PATHS} ${GCC_FLAGS} ${SCALE_CONF} -c -o ${@} ${<}
