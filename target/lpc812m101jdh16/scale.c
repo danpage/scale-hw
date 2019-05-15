@@ -279,13 +279,6 @@ bool scale_init( scale_conf_t* conf ) {
     LPC81X_UART0->CFG             &= ~( 0x1 <<  6 ) ;        // Table 173: 0 stop bits
     LPC81X_UART0->CFG             |=  ( 0x1 <<  0 ) ;        // Table 173: enable
 
-  while(  scale_uart_rd_avail() ) { // flush, ready to read 
-    scale_uart_rd( SCALE_UART_MODE_NONBLOCKING );
-  }
-  while( !scale_uart_wr_avail() ) { // flush, ready to write
-    /* skip */
-  }
-
   /* Chapter 16 details the I2C interface.
    *
    * We need to configure the clock generator so it matches the required I2C

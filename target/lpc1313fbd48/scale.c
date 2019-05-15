@@ -273,13 +273,6 @@ bool scale_init( scale_conf_t* conf ) {
     LPC13XX_UART->U0LCR           &= ~( 0x1 <<  3 ) ;         // Table 193: no parity
     LPC13XX_UART->U0LCR           &= ~( 0x1 <<  2 ) ;         // Table 193: 1 stop bits
 
-  while(  scale_uart_rd_avail() ) { // flush, ready to read
-    scale_uart_rd( SCALE_UART_MODE_NONBLOCKING );
-  }
-  while( !scale_uart_wr_avail() ) { // flush, ready to write
-    /* skip */
-  }
-
   /* Chapter 13 details the I2C interface.
    *
    * We need to configure the clock generator so it matches the required I2C
