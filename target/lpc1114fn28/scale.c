@@ -260,7 +260,7 @@ bool scale_init( scale_conf_t* conf ) {
    *     U0DLL = 4
    */
  
-    LPC111X_SYSCON->UARTCLKDIV     = scale_conf.clock_freq_target;
+    LPC111X_SYSCON->UARTCLKDIV     = scale_conf.clock_freq_source * ( SYSPLLCTRL_MSEL + 1 );
   
     LPC111X_UART->U0LCR           |=  ( 0x1 <<  7 ) ;         // Table 193:  enable divisor latch access
     LPC111X_UART->U0FDR            =  ( 0x5 <<  0 ) ;         // Table 200: set DivAddVal
