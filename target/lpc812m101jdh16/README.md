@@ -108,7 +108,7 @@ C.1      | <a href='./image/board-prototype_rev_c.jpg'><img src='./image/board-p
   (see, e.g., [1](https://bugs.launchpad.net/gcc-arm-embedded/+bug/1722849)
               or
               [2](https://bugs.launchpad.net/gcc-arm-embedded/+bug/1502611));
-  as an alternative, you *could* (maybe *should*) consider using an 
+  take care, or, as an alternative, consider using an 
   ["official" release](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain)
   directly from ARM instead.
 
