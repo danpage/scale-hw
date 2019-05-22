@@ -11,12 +11,13 @@ vpath %.S .:../../share:../../share/atmega328p
 
 include scale.conf
 
-BSP_INCLUDES =            ../../share/atmega328p
+BSP_INCLUDES      =            ../../share/atmega328p
 
-BSP_HEADERS  = $(wildcard ../../share/atmega328p/*.h )
-BSP_SOURCES  = $(wildcard ../../share/atmega328p/*.S )
+BSP_HEADERS       = $(wildcard ../../share/atmega328p/*.h )
+BSP_SOURCES       = $(wildcard ../../share/atmega328p/*.S )
 
-BSP_SCRIPTS  = $(wildcard ../../share/atmega328p/*.ld)
+BSP_RANDOMS_LIB   = $(wildcard ../../share/atmega328p/*.ld)
+BSP_RANDOMS_SHARE = 
 
 include ../../share/bsp.mk
 include ../../share/board.mk
