@@ -98,13 +98,6 @@ bool scale_init( scale_conf_t* conf ) {
   UCSR0B |=  ( 0x1 << TXEN0   ); // Section 24.12.3: UCSR0B[ 3   ] =  1 => enable Tx
   UCSR0B |=  ( 0x1 << RXEN0   ); // Section 24.12.3: UCSR0B[ 4   ] =  1 => enable Rx
 
-  while(  scale_uart_rd_avail() ) { // flush, ready to read
-    scale_uart_rd( SCALE_UART_MODE_NONBLOCKING );
-  }
-  while( !scale_uart_wr_avail() ) { // flush, ready to write
-    /* skip */
-  }
-
   /* Chapter 26 details the I2C interface (or TWI in Atmel terminology).
    *
    * We need to configure the clock generator so it matches the required I2C

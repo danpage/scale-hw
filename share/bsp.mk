@@ -4,27 +4,30 @@
 # which can be found via http://creativecommons.org (and should be included 
 # as LICENSE.txt within the associated archive or repository).
 
-BSP_DIRS     += ./build/lib 
-BSP_DIRS     += ./build/include/scale
+BSP_DIRS          += ./build/include/scale
+BSP_DIRS          += ./build/lib 
+BSP_DIRS          += ./build/share
 
-BSP_INCLUDES += ./        
-BSP_INCLUDES += ../../share
+BSP_INCLUDES      += ./        
+BSP_INCLUDES      += ../../share
 
-BSP_HEADERS  += ./scale.h 
-BSP_HEADERS  += ../../share/bsp.h
-BSP_SOURCES  += ./scale.c 
-BSP_SOURCES  += ../../share/bsp.c
+BSP_HEADERS       += ./scale.h 
+BSP_HEADERS       += ../../share/bsp.h
+BSP_SOURCES       += ./scale.c 
+BSP_SOURCES       += ../../share/bsp.c
 
-BSP_SCRIPTS  += ./scale.conf
-BSP_SCRIPTS  += ./scale.ld
-BSP_SCRIPTS  += ./scale.mk
+BSP_RANDOMS_LIB   += ./scale.conf
+BSP_RANDOMS_LIB   += ./scale.ld
+BSP_RANDOMS_LIB   += ./scale.mk
+BSP_RANDOMS_SHARE +=  $(wildcard ../../share/putty/*) ../../emulator/emulator.py
 
-BSP_OBJECTS  += $(addprefix ./build/lib/,           $(notdir $(patsubst %.c, %.o, $(filter %.c, ${BSP_SOURCES}))))
-BSP_OBJECTS  += $(addprefix ./build/lib/,           $(notdir $(patsubst %.s, %.o, $(filter %.s, ${BSP_SOURCES}))))
-BSP_OBJECTS  += $(addprefix ./build/lib/,           $(notdir $(patsubst %.S, %.o, $(filter %.S, ${BSP_SOURCES}))))
+BSP_OBJECTS       += $(addprefix ./build/lib/,           $(notdir $(patsubst %.c, %.o, $(filter %.c, ${BSP_SOURCES}))    ))
+BSP_OBJECTS       += $(addprefix ./build/lib/,           $(notdir $(patsubst %.s, %.o, $(filter %.s, ${BSP_SOURCES}))    ))
+BSP_OBJECTS       += $(addprefix ./build/lib/,           $(notdir $(patsubst %.S, %.o, $(filter %.S, ${BSP_SOURCES}))    ))
 
-BSP_TARGETS  += $(addprefix ./build/include/scale/, $(notdir                                    ${BSP_HEADERS}  )) ./build/lib/libscale.a
-BSP_TARGETS  += $(addprefix ./build/lib/,           $(notdir                                    ${BSP_SCRIPTS}  ))
+BSP_TARGETS       += $(addprefix ./build/include/scale/, $(notdir                                    ${BSP_HEADERS}      ))
+BSP_TARGETS       += $(addprefix ./build/lib/,           $(notdir                                    ${BSP_RANDOMS_LIB}  )) ./build/lib/libscale.a
+BSP_TARGETS       += $(addprefix ./build/share/,         $(notdir                                    ${BSP_RANDOMS_SHARE}))
 
 .PRECIOUS: ${BSP_OBJECTS}
 
@@ -42,12 +45,13 @@ ${BSP_DIRS} :
 	@${GCC_PREFIX}ar rcs ${@} ${^}
 
 define cp
-./build/${1}/$(notdir ${2}) : ${2}
+./build/$(strip ${1})/$(notdir $(strip ${2})) : ${2}
 	@cp $${<} $${@} 
 endef
 
-$(foreach HEADER, ${BSP_HEADERS}, $(eval $(call cp,include/scale,${HEADER})))
-$(foreach SCRIPT, ${BSP_SCRIPTS}, $(eval $(call cp,lib,          ${SCRIPT})))
+$(foreach FILE, ${BSP_HEADERS},       $(eval $(call cp, include/scale, ${FILE})))
+$(foreach FILE, ${BSP_RANDOMS_LIB},   $(eval $(call cp, lib,           ${FILE})))
+$(foreach FILE, ${BSP_RANDOMS_SHARE}, $(eval $(call cp, share,         ${FILE})))
 
 bsp-all   : ${BSP_DIRS} ${BSP_TARGETS}
 

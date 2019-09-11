@@ -260,7 +260,7 @@ bool scale_init( scale_conf_t* conf ) {
    *     U0DLL = 4
    */
 
-    LPC13XX_SYSCON->UARTCLKDIV     = scale_conf.clock_freq_target;
+    LPC13XX_SYSCON->UARTCLKDIV     = scale_conf.clock_freq_source * ( SYSPLLCTRL_MSEL + 1 );
   
     LPC13XX_UART->U0LCR           |=  ( 0x1 <<  7 ) ;         // Table 193:  enable divisor latch access
     LPC13XX_UART->U0FDR            =  ( 0x5 <<  0 ) ;         // Table 200: set DivAddVal
@@ -272,13 +272,6 @@ bool scale_init( scale_conf_t* conf ) {
     LPC13XX_UART->U0LCR           |=  ( 0x3 <<  0 ) ;         // Table 193: 8 data bits
     LPC13XX_UART->U0LCR           &= ~( 0x1 <<  3 ) ;         // Table 193: no parity
     LPC13XX_UART->U0LCR           &= ~( 0x1 <<  2 ) ;         // Table 193: 1 stop bits
-
-  while(  scale_uart_rd_avail() ) { // flush, ready to read
-    scale_uart_rd( SCALE_UART_MODE_NONBLOCKING );
-  }
-  while( !scale_uart_wr_avail() ) { // flush, ready to write
-    /* skip */
-  }
 
   /* Chapter 13 details the I2C interface.
    *

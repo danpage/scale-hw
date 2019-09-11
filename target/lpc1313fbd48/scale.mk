@@ -37,6 +37,8 @@ PROJECT_TARGETS  += ${PROJECT}.hex
 %.hex       : %.elf
 	@${GCC_PREFIX}objcopy ${OBJCOPY_FLAGS} -O ihex   ${<} ${@}
 
+include ${BSP}/share/putty.mk
+
 all     : ${PROJECT_TARGETS}
 
 clean   :
@@ -45,3 +47,5 @@ clean   :
 program : ${PROJECT_TARGETS}
 	@lpc21isp -wipe -hex $(filter %.hex, ${^}) ${USB} 9600 12000
 
+emulate : ${PROJECT_TARGETS}
+	@python -O ${BSP}/share/emulator.py --file="$(filter %.hex, ${^})" --host="127.0.0.1" --port="1234" --target="lpc1313fbd48"

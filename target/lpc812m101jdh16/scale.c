@@ -266,7 +266,7 @@ bool scale_init( scale_conf_t* conf ) {
    * to get the approximation 9609 baud ~= 9600 baud.
    */
 
-  uint32_t UARTCLKDIV = scale_conf.clock_freq_target, UARTFRGDIV = 255, UARTFRGMULT = 77, BRG = 4;
+  uint32_t UARTCLKDIV = scale_conf.clock_freq_source * ( SYSPLLCTRL_MSEL + 1 ), UARTFRGDIV = 255, UARTFRGMULT = 77, BRG = 4;
 
     LPC81X_SYSCON->UARTCLKDIV      = UARTCLKDIV;             // Table  31: set UART                 divider
     LPC81X_SYSCON->UARTFRGDIV      = UARTFRGDIV;             // Table  35: set fractional generator divider 
@@ -278,13 +278,6 @@ bool scale_init( scale_conf_t* conf ) {
     LPC81X_UART0->CFG             &= ~( 0x3 <<  4 ) ;        // Table 173: no parity
     LPC81X_UART0->CFG             &= ~( 0x1 <<  6 ) ;        // Table 173: 0 stop bits
     LPC81X_UART0->CFG             |=  ( 0x1 <<  0 ) ;        // Table 173: enable
-
-  while(  scale_uart_rd_avail() ) { // flush, ready to read 
-    scale_uart_rd( SCALE_UART_MODE_NONBLOCKING );
-  }
-  while( !scale_uart_wr_avail() ) { // flush, ready to write
-    /* skip */
-  }
 
   /* Chapter 16 details the I2C interface.
    *

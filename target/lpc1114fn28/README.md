@@ -111,6 +111,16 @@ C.1      | <a href='./image/board-prototype_rev_c.jpg'><img src='./image/board-p
   sudo apt-get install gcc-arm-none-eabi lpc21isp
   ```
 
+  That said, some versions of this 
+  [Ubuntu packaged](https://launchpad.net/ubuntu/+source/gcc-arm-none-eabi) 
+  tool-chain have known issues 
+  (see, e.g., [1](https://bugs.launchpad.net/gcc-arm-embedded/+bug/1722849)
+              or
+              [2](https://bugs.launchpad.net/gcc-arm-embedded/+bug/1502611));
+  take care, or, as an alternative, consider using an 
+  ["official" release](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain)
+  directly from ARM instead.
+
 - A pre-installed 
   [bootloader](http://en.wikipedia.org/wiki/Booting)
   allows programming of the DUT over USB;

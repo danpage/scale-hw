@@ -11,12 +11,13 @@ vpath %.S .:../../share:../../share/lpc13xx
 
 include scale.conf
 
-BSP_INCLUDES =            ../../share/lpc13xx
+BSP_INCLUDES      =            ../../share/lpc13xx
 
-BSP_HEADERS  = $(wildcard ../../share/lpc13xx/*.h ) 
-BSP_SOURCES  = $(wildcard ../../share/lpc13xx/*.S ) 
+BSP_HEADERS       = $(wildcard ../../share/lpc13xx/*.h ) 
+BSP_SOURCES       = $(wildcard ../../share/lpc13xx/*.S ) 
 
-BSP_SCRIPTS  = $(wildcard ../../share/lpc13xx/*.ld) 
+BSP_RANDOMS_LIB   = $(wildcard ../../share/lpc13xx/*.ld)
+BSP_RANDOMS_SHARE = 
 
 include ../../share/bsp.mk
 include ../../share/board.mk

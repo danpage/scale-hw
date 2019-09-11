@@ -1,0 +1,19 @@
+# Copyright (C) 2017 Daniel Page <dan@phoo.org>
+#
+# Use of this source code is restricted per the CC BY-SA license, a copy of
+# which can be found via http://creativecommons.org (and should be included 
+# as LICENSE.txt within the associated archive or repository).
+
+Protocol=serial
+LocalEcho=0
+LocalEdit=1
+LFImpliesCR=0
+CRImpliesLF=1
+TermWidth=80
+TermHeight=24
+SerialLine=/dev/scale-board
+SerialSpeed=9600
+SerialDataBits=8
+SerialStopHalfbits=2
+SerialParity=0
+SerialFlowControl=0

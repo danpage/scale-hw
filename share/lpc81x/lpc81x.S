@@ -19,7 +19,7 @@
 
                     .global  LPC81X_SYSCON
                     .global  LPC81X_IOCON
-                    .global  LPC81X_GPIO0
+                    .global  LPC81X_GPIO
                     .global  LPC81X_SWM
                     .global  LPC81X_UART0
                     .global  LPC81X_UART1
