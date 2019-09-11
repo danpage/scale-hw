@@ -109,10 +109,11 @@ C.1      | <a href='./image/board-prototype_rev_c.jpg'><img src='./image/board-p
 
   That said, it *seems* the DUT isn't correctly identified by 
   [OpenOCD](http://openocd.org),
-  at least per version 0.10.0.  It's not totally clear why: the flash 
-  driver seems to read a part ID of `0x2000002B`, which doesn't match 
-  the expected value of `0x2C40102B`.  This can be resolved by adding 
-  something like
+  at least per version 
+  [0.10.0](http://sourceforge.net/p/openocd/code/ci/v0.10.0/tree/).  
+  It's not totally clear why: the flash driver seems to read a part ID
+  of `0x2000002B` (vs. an expected part ID `0x2C40102B`).  This can be 
+  resolved by adding something like
 
   ```
   #define LPC1313_2 0x2000002B
@@ -120,7 +121,10 @@ C.1      | <a href='./image/board-prototype_rev_c.jpg'><img src='./image/board-p
  
   plus an appropriate case in the `lpc2000_auto_probe_flash` function 
   of
-  [`${OPENOCD}/src/flash/nor/lpc2000.c`](http://sourceforge.net/p/openocd/code/ci/master/tree/src/flash/nor/lpc2000.c).
+  [`${OPENOCD}/src/flash/nor/lpc2000.c`](http://sourceforge.net/p/openocd/code/ci/v0.10.0/tree/src/flash/nor/lpc2000.c);
+  alternatively, apply the
+  [patch](./openocd-0.10.0.patch)
+  provided.
 
 <!--- -------------------------------------------------------------------- --->
 

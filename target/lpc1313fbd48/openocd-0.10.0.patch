@@ -1,0 +1,20 @@
+Binary files openocd-0.10.0/.git/index and openocd-0.10.0-patched/.git/index differ
+diff --recursive --unified --new-file openocd-0.10.0/src/flash/nor/lpc2000.c openocd-0.10.0-patched/src/flash/nor/lpc2000.c
+--- openocd-0.10.0/src/flash/nor/lpc2000.c	2019-09-10 16:20:54.912818758 +0100
++++ openocd-0.10.0-patched/src/flash/nor/lpc2000.c	2019-09-11 08:30:22.257120438 +0100
+@@ -206,6 +206,7 @@
+ #define LPC1311_1      0x1816902B
+ #define LPC1313        0x2C40102B
+ #define LPC1313_1      0x1830102B
++#define LPC1313_2      0x2000002B
+ #define LPC1315        0x3A010523
+ #define LPC1316        0x1A018524
+ #define LPC1317        0x1A020525
+@@ -1323,6 +1324,7 @@
+ 		case LPC11U24_401:
+ 		case LPC1313:
+ 		case LPC1313_1:
++		case LPC1313_2:
+ 		case LPC1315:
+ 		case LPC1343:
+ 		case LPC1343_1:
