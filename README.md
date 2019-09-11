@@ -224,6 +224,7 @@ in this case `lpc1114fn28`:
   - [Side-channel Attack Standard Evaluation BOard (SASEBO)](http://www.risec.aist.go.jp/project/sasebo) (a wide-ranging project for side-channel attack evaluation platforms, focusing on FPGA-based targets),
   - [ChipWhisperer](http://www.newae.com/tools/chipwhisperer) (a mid-end solution from [NewAE Technology Inc.](http://www.newae.com)),
     plus associated projects such as [GlitchKit](http://github.com/glitchkit),
+  - [HorrorScope](http://github.com/albert-spruyt/HorrorScope) (a ultra low-end solution, developed for [ScaCheapier workshop](http://events.ccc.de/congress/2018/wiki/index.php/Session:ScaCheapier) at 35c3),
   - [Generic Implementation ANalysis Toolkit (GIAnT)](https://sourceforge.net/projects/giant/) (a mid-end solution from [KAOS](http://kasper-oswald.de)),
   - [DPA WorkStation (DPAWS)](http://www.rambus.com/security/dpa-countermeasures/dpa-workstation-platform/) (a high-end solution from [Rambus/Cryptography Research Inc. (CRI)](http://www.rambus.com/security)),
   - [Inspector SCA](https://www.riscure.com/security-tools/inspector-sca) (a high-end solution from [Riscure](http://www.riscure.com)),
