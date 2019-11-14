@@ -1,4 +1,4 @@
-# [SCALE](http://www.github.com/danpage/scale): hardware-oriented offshoot (target board: lpc114fn28)
+# [SCALE](http://www.github.com/danpage/scale): hardware-oriented offshoot (target board: lpc1114fn28)
 
 <!--- -------------------------------------------------------------------- --->
 

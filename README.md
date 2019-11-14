@@ -352,7 +352,7 @@ in this case `lpc1114fn28`:
     configuration;
     it would obviously be useful to allow user configuration of both.
   - None of the BSPs do the "wake-up" process required by some of the 
-    I2C slaves: see, e.g., Section 6.1.1 of the
+    I2C peripherals: see, e.g., Section 6.1.1 of the
     [ATSHA204A](http://www.atmel.com/images/Atmel-8885-CryptoAuth-ATSHA204A-Datasheet.pdf)
     datasheet.  Clearly this would be a useful feature to include.
   - There is no specific library support for the I2C peripherals, i.e., 
