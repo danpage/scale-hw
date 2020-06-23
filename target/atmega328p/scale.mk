@@ -33,9 +33,9 @@ PROJECT_TARGETS  += ${PROJECT}.hex
 %.elf %.map : ${PROJECT_SOURCES} ${PROJECT_HEADERS}
 	@${GCC_PREFIX}gcc $(patsubst %, -I %, ${PROJECT_INCLUDES}) ${GCC_PATHS} ${GCC_FLAGS} ${SCALE_CONF} -Wl,-Map=${*}.map -o ${*}.elf ${PROJECT_SOURCES} ${GCC_LIBS}
 %.bin       : %.elf
-	@${GCC_PREFIX}objcopy ${OBJCOPY_FLAGS} -O binary ${<} ${@}
+	@${GCC_PREFIX}objcopy ${OBJCOPY_FLAGS} --output-target="binary" ${<} ${@}
 %.hex       : %.elf
-	@${GCC_PREFIX}objcopy ${OBJCOPY_FLAGS} -O ihex   ${<} ${@}
+	@${GCC_PREFIX}objcopy ${OBJCOPY_FLAGS} --output-target="ihex"   ${<} ${@}
 
 include ${BSP}/share/putty.mk
 
