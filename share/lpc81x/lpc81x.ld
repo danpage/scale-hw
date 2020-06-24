@@ -5,7 +5,7 @@
  * as LICENSE.txt within the associated archive or repository).
  */
 
-ENTRY( __irq_vector )
+ENTRY( __irq_table )
 
 SECTIONS {
   . = 0x00000000;

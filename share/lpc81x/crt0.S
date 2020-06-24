@@ -31,9 +31,9 @@
  */
                     .section .data.__irq_handler, "w"
 
-                    .global  __irq_vector
+                    .global  __irq_table
 
-__irq_vector:       .word    __tos             // 0x00000000 => Top of Stack    
+__irq_table:        .word    __tos             // 0x00000000 => Top of Stack    
                     .word    __irq_handler_rst // 0x00000004 => reset         handler 
                     .word    __irq_handler_nul // 0x00000008 => NMI           handler 
                     .word    __irq_handler_nul // 0x0000000C => Hard  fault   handler
