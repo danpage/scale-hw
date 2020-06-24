@@ -10,7 +10,7 @@ ENTRY( __irq_table )
 SECTIONS {
   . = 0x00000000;
 
-  .text : {
+  .text         : ALIGN( 16 ) {
     __head_text = .;
     *( .data.__irq_handler )
     *( .text.__irq_handler )
@@ -43,4 +43,4 @@ PROVIDE( __load_text = LOADADDR( .text ) );
 PROVIDE( __load_data = LOADADDR( .data ) );
 PROVIDE( __load_bss  = LOADADDR( .bss  ) );
 
-PROVIDE( __tos       = ORIGIN( ram ) + LENGTH( ram ) );
+PROVIDE( __tos = ORIGIN( ram ) + LENGTH( ram ) );
