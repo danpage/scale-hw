@@ -126,7 +126,7 @@ __irq_handler_tsc:  ldr      r0, =lpc13xx_tsc  // r0  = &lpc13xx_tsc
 __start:            eors     r0, r0            // argc  = 0
                     eors     r1, r1            // argv  = NULL
   
-                    bl       main              // call main
+                    bl       main              // call    main
 
                     b        .                 // spin ~= halt
 
