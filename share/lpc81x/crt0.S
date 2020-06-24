@@ -61,7 +61,7 @@ __irq_vector:       .word    __tos             // 0x00000000 => Top of Stack
                     .global  __irq_handler_nul
                     .thumb_func
 
-__irq_handler_nul:  b        .                 // spin
+__irq_handler_nul:  b        .                 // spin ~= halt
 
                     .global  __irq_handler_rst
                     .thumb_func  
@@ -123,11 +123,11 @@ __irq_handler_tsc:  ldr      r0, =lpc81x_tsc  // r0  = &lpc81x_tsc
                     .global  __start	
                     .thumb_func  
 	
-__start:            eors     r0, r0            // argc = 0
-                    eors     r1, r1            // argv = NULL
+__start:            eors     r0, r0            // argc  = 0
+                    eors     r1, r1            // argv  = NULL
   
                     bl       main              // call main
 
-                    bx       lr                // return
+                    b        .                 // spin ~= halt
 
 // ----------------------------------------------------------------------------
