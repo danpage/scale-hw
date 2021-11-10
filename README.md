@@ -312,7 +312,7 @@ in this case `lpc1114fn28`:
 
   *all* of which come *highly* recommended as a result, bar perhaps Eagle:
   in hindsight, using
-  [KiCad](http://www.kicad-pcb.org)
+  [KiCad](http://www.kicad.org)
   would have been preferable (given enough time to learn it).
 
 <!--- -------------------------------------------------------------------- --->
