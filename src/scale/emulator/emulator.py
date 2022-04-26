@@ -80,12 +80,12 @@ def mmio_uart_wr( emu, mode, addr, size, val, data ):
 def fetch( emu, addr, size, data ):
   if ( args.debug ) :
     for instr in list( asm.disasm( ''.join( map( chr, emu.mem_read( addr, size ) ) ), size ) ) : 
-      print 'executing @ addr: %08X, size: %02d => instr: %s %s' % ( addr, size, instr.mnemonic, instr.op_str )
+      print( 'executing @ addr: {0:08X}, size: {1:02d} => instr: {2:s} {3:s}'.format( addr, size, instr.mnemonic, instr.op_str )
 
-      print 'R0  = %08X  R1  = %08X  R2  = %08X  R3  = %08X' % ( emu.reg_read( unicorn_arm.UC_ARM_REG_R0  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R1  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R2  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R3  ) )
-      print 'R4  = %08X  R5  = %08X  R6  = %08X  R7  = %08X' % ( emu.reg_read( unicorn_arm.UC_ARM_REG_R4  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R5  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R6  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R7  ) )
-      print 'R8  = %08X  R9  = %08X  R10 = %08X  R11 = %08X' % ( emu.reg_read( unicorn_arm.UC_ARM_REG_R8  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R9  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R10 ), emu.reg_read( unicorn_arm.UC_ARM_REG_R11 ) )
-      print 'R12 = %08X  R13 = %08X  R14 = %08X  R15 = %08X' % ( emu.reg_read( unicorn_arm.UC_ARM_REG_R12 ), emu.reg_read( unicorn_arm.UC_ARM_REG_R13 ), emu.reg_read( unicorn_arm.UC_ARM_REG_R14 ), emu.reg_read( unicorn_arm.UC_ARM_REG_R15 ) )
+      print( 'R0  = {0:08X}  R1  = {1:08X}  R2  = {2:08X}  R3  = {3:08X}'.format( emu.reg_read( unicorn_arm.UC_ARM_REG_R0  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R1  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R2  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R3  ) ) )
+      print( 'R4  = {0:08X}  R5  = {1:08X}  R6  = {2:08X}  R7  = {3:08X}'.format( emu.reg_read( unicorn_arm.UC_ARM_REG_R4  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R5  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R6  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R7  ) ) )
+      print( 'R8  = {0:08X}  R9  = {1:08X}  R10 = {2:08X}  R11 = {3:08X}'.format( emu.reg_read( unicorn_arm.UC_ARM_REG_R8  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R9  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R10 ), emu.reg_read( unicorn_arm.UC_ARM_REG_R11 ) ) )
+      print( 'R12 = {0:08X}  R13 = {1:08X}  R14 = {2:08X}  R15 = {3:08X}'.format( emu.reg_read( unicorn_arm.UC_ARM_REG_R12 ), emu.reg_read( unicorn_arm.UC_ARM_REG_R13 ), emu.reg_read( unicorn_arm.UC_ARM_REG_R14 ), emu.reg_read( unicorn_arm.UC_ARM_REG_R15 ) ) )
  
 if ( __name__ == '__main__' ) :
   # parse command line arguments
