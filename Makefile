@@ -13,10 +13,12 @@ endif
 
 # ============================================================================= 
 
-venv        : ${REPO_HOME}/requirements.txt
-	@${REPO_HOME}/bin/venv.sh
+venv     : ${REPO_HOME}/requirements.txt
+	@bash ${REPO_HOME}/bin/venv.sh
 
-spotless    :
+clean    :
+
+spotless : clean
 	@rm --force --recursive ${REPO_HOME}/build/*
 
 # ============================================================================= 
