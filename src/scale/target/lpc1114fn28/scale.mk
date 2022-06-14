@@ -14,6 +14,8 @@ ifndef USB
   $(warning     USB environment variable not set)
 endif
 
+# =============================================================================
+
 include ${BSP}/lib/scale.conf
 
 GCC_FLAGS        += -T ${BSP}/lib/scale.ld
@@ -30,6 +32,10 @@ PROJECT_TARGETS  += ${PROJECT}.elf
 PROJECT_TARGETS  += ${PROJECT}.bin
 PROJECT_TARGETS  += ${PROJECT}.hex
 
+# -----------------------------------------------------------------------------
+
+include ${BSP}/share/putty.mk
+
 %.elf %.map : ${PROJECT_SOURCES} ${PROJECT_HEADERS}
 	@${GCC_PREFIX}gcc $(patsubst %, -I %, ${PROJECT_INCLUDES}) ${GCC_PATHS} ${GCC_FLAGS} ${SCALE_CONF} -Wl,-Map=${*}.map -o ${*}.elf ${PROJECT_SOURCES} ${GCC_LIBS}
 %.bin       : %.elf
@@ -37,15 +43,17 @@ PROJECT_TARGETS  += ${PROJECT}.hex
 %.hex       : %.elf
 	@${GCC_PREFIX}objcopy ${OBJCOPY_FLAGS} --output-target="ihex"   ${<} ${@}
 
-include ${BSP}/share/putty.mk
+# -----------------------------------------------------------------------------
 
-all     : ${PROJECT_TARGETS}
+build   :           ${PROJECT_TARGETS}
 
 clean   : 
-	@rm -f ${PROJECT_TARGETS}
+	@rm --force ${PROJECT_TARGETS}
 
-program : ${PROJECT_TARGETS}
+program :           ${PROJECT_TARGETS}
 	@lpc21isp -wipe -hex $(filter %.hex, ${^}) ${USB} 9600 12000
 
-emulate : ${PROJECT_TARGETS}
+emulate :           ${PROJECT_TARGETS}
 	@python -O ${BSP}/share/emulator.py --file="$(filter %.hex, ${^})" --host="127.0.0.1" --port="1234" --target="lpc1114fn28"
+
+# =============================================================================

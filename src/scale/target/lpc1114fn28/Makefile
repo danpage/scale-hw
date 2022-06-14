@@ -4,10 +4,14 @@
 # which can be found via http://creativecommons.org (and should be included 
 # as LICENSE.txt within the associated archive or repository).
 
-vpath %.h .:../../share:../../share/lpc111x
-vpath %.c .:../../share:../../share/lpc111x
-vpath %.s .:../../share:../../share/lpc111x
-vpath %.S .:../../share:../../share/lpc111x
+ifndef REPO_HOME
+  $(error "execute 'source ./bin/conf.sh' to configure environment")
+endif
+ifndef REPO_VERSION
+  $(error "execute 'source ./bin/conf.sh' to configure environment")
+endif
+
+# =============================================================================
 
 include scale.conf
 
@@ -19,12 +23,20 @@ BSP_SOURCES       = $(wildcard ../../share/lpc111x/*.S )
 BSP_RANDOMS_LIB   = $(wildcard ../../share/lpc111x/*.ld)
 BSP_RANDOMS_SHARE = 
 
+# -----------------------------------------------------------------------------
+
+vpath %.h .:../../share:../../share/lpc111x
+vpath %.c .:../../share:../../share/lpc111x
+vpath %.s .:../../share:../../share/lpc111x
+vpath %.S .:../../share:../../share/lpc111x
+
 include ../../share/bsp.mk
 include ../../share/board.mk
 
-all     : bsp
+# -----------------------------------------------------------------------------
 
-bsp     : bsp-all
-board   :           board-all   
+build   : bsp-build
 
-clean   : bsp-clean board-clean
+clean   : bsp-clean
+
+# =============================================================================

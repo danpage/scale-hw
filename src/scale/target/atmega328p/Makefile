@@ -4,10 +4,14 @@
 # which can be found via http://creativecommons.org (and should be included 
 # as LICENSE.txt within the associated archive or repository).
 
-vpath %.h .:../../share:../../share/atmega328p
-vpath %.c .:../../share:../../share/atmega328p
-vpath %.s .:../../share:../../share/atmega328p
-vpath %.S .:../../share:../../share/atmega328p
+ifndef REPO_HOME
+  $(error "execute 'source ./bin/conf.sh' to configure environment")
+endif
+ifndef REPO_VERSION
+  $(error "execute 'source ./bin/conf.sh' to configure environment")
+endif
+
+# =============================================================================
 
 include scale.conf
 
@@ -19,12 +23,20 @@ BSP_SOURCES       = $(wildcard ../../share/atmega328p/*.S )
 BSP_RANDOMS_LIB   = $(wildcard ../../share/atmega328p/*.ld)
 BSP_RANDOMS_SHARE = 
 
+# -----------------------------------------------------------------------------
+
+vpath %.h .:../../share:../../share/atmega328p
+vpath %.c .:../../share:../../share/atmega328p
+vpath %.s .:../../share:../../share/atmega328p
+vpath %.S .:../../share:../../share/atmega328p
+
 include ../../share/bsp.mk
 include ../../share/board.mk
 
-all     : bsp
+# -----------------------------------------------------------------------------
 
-bsp     : bsp-all
-board   :           board-all   
+build   : bsp-build
 
-clean   : bsp-clean board-clean
+clean   : bsp-clean
+
+# =============================================================================
