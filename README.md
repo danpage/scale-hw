@@ -57,7 +57,7 @@ alternative.  For example, particularly at scale, it may be that
 
 - the 
   [Total Cost of Ownership (TCO)](http://en.wikipedia.org/wiki/Total_cost_of_ownership),
- i.e., capital investment plus maintenance, 
+  i.e., capital investment plus maintenance, 
 - the domain-specific requirements on 
   [Commercial Off-The-Shelf (COTS)](http://en.wikipedia.org/wiki/Commercial_off-the-shelf)
   target boards, such as the need to insert a shunt resistor into the 
