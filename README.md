@@ -120,4 +120,10 @@ and, ultimately, the content.
   make --directory="${REPO_HOME}/src/scale/target/${TARGET}" build
   ```
 
+- Make use of the material in
+
+  ```sh
+  ${REPO_HOME}/build/${TARGET}
+  ```
+
 <!--- -------------------------------------------------------------------- --->
