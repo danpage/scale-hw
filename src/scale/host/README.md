@@ -1,4 +1,4 @@
-# [SCALE](http://www.github.com/danpage/scale): hardware-oriented offshoot (host board)
+# [SCALE](http://www.github.com/danpage/scale): hardware-oriented material (host board)
 
 <!--- -------------------------------------------------------------------- --->
 

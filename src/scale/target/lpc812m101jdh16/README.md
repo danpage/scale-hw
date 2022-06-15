@@ -1,4 +1,4 @@
-# [SCALE](http://www.github.com/danpage/scale): hardware-oriented offshoot (target board: lpc812m101jdh16)
+# [SCALE](http://www.github.com/danpage/scale): hardware-oriented material (target board: lpc812m101jdh16)
 
 <!--- -------------------------------------------------------------------- --->
 
