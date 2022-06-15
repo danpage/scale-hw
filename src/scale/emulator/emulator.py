@@ -15,11 +15,11 @@ import intelhex           as intelhex
 
 def mmio_syscon_rd( emu, mode, addr, size, val, data ):
   if   ( addr == 0x4004800C ) : # SYSPLLSTAT
-      emu.mem_write( 0x4004800C, chr( 1 ) )
+      emu.mem_write( 0x4004800C, bytes( [ 1 ] ) )
   elif ( addr == 0x40048044 ) : # SYSPLLCLKUEN
-      emu.mem_write( 0x40048044, chr( 1 ) )
+      emu.mem_write( 0x40048044, bytes( [ 1 ] ) )
   elif ( addr == 0x40048074 ) : # MAINCLKUEN
-      emu.mem_write( 0x40048074, chr( 1 ) )
+      emu.mem_write( 0x40048074, bytes( [ 1 ] ) )
 
 def mmio_syscon_wr( emu, mode, addr, size, val, data ):
   pass
@@ -67,7 +67,7 @@ def mmio_uart_wr( emu, mode, addr, size, val, data ):
       return
 
     if ( mmio_uart_can_wr( mmio_uart_client ) ) :
-      mmio_uart_client.send( chr( val ) )
+      mmio_uart_client.send( bytes( [ val ] ) )
     else :
       pass
 
@@ -79,8 +79,8 @@ def mmio_uart_wr( emu, mode, addr, size, val, data ):
 
 def fetch( emu, addr, size, data ):
   if ( args.debug ) :
-    for instr in list( asm.disasm( ''.join( map( chr, emu.mem_read( addr, size ) ) ), size ) ) : 
-      print( 'executing @ addr: {0:08X}, size: {1:02d} => instr: {2:s} {3:s}'.format( addr, size, instr.mnemonic, instr.op_str )
+    for instr in list( asm.disasm( emu.mem_read( addr, size ), size ) ) : 
+      print( 'executing @ addr: {0:08X}, size: {1:02d} => instr: {2:s} {3:s}'.format( addr, size, instr.mnemonic, instr.op_str ) )
 
       print( 'R0  = {0:08X}  R1  = {1:08X}  R2  = {2:08X}  R3  = {3:08X}'.format( emu.reg_read( unicorn_arm.UC_ARM_REG_R0  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R1  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R2  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R3  ) ) )
       print( 'R4  = {0:08X}  R5  = {1:08X}  R6  = {2:08X}  R7  = {3:08X}'.format( emu.reg_read( unicorn_arm.UC_ARM_REG_R4  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R5  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R6  ), emu.reg_read( unicorn_arm.UC_ARM_REG_R7  ) ) )
@@ -156,7 +156,7 @@ if ( __name__ == '__main__' ) :
   img = intelhex.IntelHex( args.file )
   
   for addr in img.addresses() :
-    emu.mem_write( addr, chr( img[ addr ] ) )
+    emu.mem_write( addr, bytes( [ img[ addr ] ] ) )
   
   # reset   emulator
 

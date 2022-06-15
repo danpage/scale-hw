@@ -126,4 +126,24 @@ and, ultimately, the content.
   ${REPO_HOME}/build/${TARGET}
   ```
 
+  e.g.,
+
+  - build   the example:
+
+    ```sh
+    make --directory="${REPO_HOME}/src/scale/example" --file="${REPO_HOME}/build/${TARGET}/lib/scale.mk" PROJECT="example" BSP="${REPO_HOME}/build/${TARGET}" USB="/dev/ttyUSB0" build
+    ```
+
+  - program the example (i.e., execute it on physical hardware):
+
+    ```sh
+    make --directory="${REPO_HOME}/src/scale/example" --file="${REPO_HOME}/build/${TARGET}/lib/scale.mk" PROJECT="example" BSP="${REPO_HOME}/build/${TARGET}" USB="/dev/ttyUSB0" program
+    ```
+
+  - emulate the example (i.e., execute it on  virtual hardware):
+
+    ```sh
+    make --directory="${REPO_HOME}/src/scale/example" --file="${REPO_HOME}/build/${TARGET}/lib/scale.mk" PROJECT="example" BSP="${REPO_HOME}/build/${TARGET}" USB="/dev/ttyUSB0" emulate
+    ```
+
 <!--- -------------------------------------------------------------------- --->
