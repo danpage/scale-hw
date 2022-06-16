@@ -80,7 +80,9 @@ and, ultimately, the content.
 
 ## Quickstart
 
-- Install any pre-requisites.
+- Install any pre-requisites, e.g., support for
+  [Git Large File Storage (LFS)](http://git-lfs.github.com/)
+  (without this, some content will appear as a set of pointers to data vs. the data itself).
 
 - Clone the repo.
 
