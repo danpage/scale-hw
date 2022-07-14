@@ -6,18 +6,18 @@
 
 # =============================================================================
 
-${HOME}/.putty/sessions/scale-board    : ${BSP}/share/putty.scale-board
-	@mkdir --parents $(dir ${@}) && cp ${BSP}/share/putty.scale-board    ${@}
+${HOME}/.putty/sessions/scale-physical : ${BSP}/share/putty.scale-physical
+	@mkdir --parents $(dir ${@}) && cp ${BSP}/share/putty.scale-physical ${@}
 
-${HOME}/.putty/sessions/scale-emulator : ${BSP}/share/putty.scale-emulator
-	@mkdir --parents $(dir ${@}) && cp ${BSP}/share/putty.scale-emulator ${@}
+${HOME}/.putty/sessions/scale-emulated : ${BSP}/share/putty.scale-emulated
+	@mkdir --parents $(dir ${@}) && cp ${BSP}/share/putty.scale-emulated ${@}
 
 # -----------------------------------------------------------------------------
 
-putty-board    : ${HOME}/.putty/sessions/scale-board
+putty-physical : ${HOME}/.putty/sessions/scale-physical
 	@putty -load $(notdir ${<})
 
-putty-emulator : ${HOME}/.putty/sessions/scale-emulator
+putty-emulated : ${HOME}/.putty/sessions/scale-emulated
 	@putty -load $(notdir ${<})
 
 # =============================================================================
