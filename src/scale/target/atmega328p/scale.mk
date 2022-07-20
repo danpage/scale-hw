@@ -32,6 +32,13 @@ PROJECT_TARGETS  += ${PROJECT}.elf
 PROJECT_TARGETS  += ${PROJECT}.bin
 PROJECT_TARGETS  += ${PROJECT}.hex
 
+ifndef EMULATOR_HOST
+EMULATOR_HOST     = 127.0.0.1
+endif
+ifndef EMULATOR_PORT
+EMULATOR_PORT     = 1234
+endif
+
 # -----------------------------------------------------------------------------
 
 include ${BSP}/share/putty.mk
@@ -45,16 +52,16 @@ include ${BSP}/share/putty.mk
 
 # -----------------------------------------------------------------------------
 
-build   :           ${PROJECT_TARGETS}
+build   :                           ${PROJECT_TARGETS}
 
 clean   :
-	@rm --force ${PROJECT_TARGETS}
+	@rm --force                 ${PROJECT_TARGETS}
 
-program :           ${PROJECT_TARGETS}
-	@avrdude -v -e -V -P ${USB} -c arduino -p m328p -U flash:w:$(filter %.hex, ${^})
+program :           $(filter %.hex, ${PROJECT_TARGETS})
+	@avrdude -v -e -V -P ${USB} -c arduino -p m328p -U flash:w:${<}
 
-emulate :           ${PROJECT_TARGETS}
-	@python -O ${BSP}/share/emulator.py --file="$(filter %.hex, ${^})" --host="127.0.0.1" --port="1234" --target="atmega328p"
+emulate :           $(filter %.hex, ${PROJECT_TARGETS})
+	@python3 -O ${BSP}/share/emulator.py --file="${<}" --host="${EMULATOR_HOST}" --port="${EMULATOR_PORT}" --target="atmega328p"
 
 fuse    : 
 	@avrdude -v -e -V -P ${USB} -c arduino -p m328p ${SCALE_FUSE}

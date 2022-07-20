@@ -14,6 +14,9 @@ ifndef USB
   $(warning     USB environment variable not set)
 endif
 
+ifndef HOST
+HOST = 
+
 # =============================================================================
 
 include ${BSP}/lib/scale.conf
@@ -32,6 +35,13 @@ PROJECT_TARGETS  += ${PROJECT}.elf
 PROJECT_TARGETS  += ${PROJECT}.bin
 PROJECT_TARGETS  += ${PROJECT}.hex
 
+ifndef EMULATOR_HOST
+EMULATOR_HOST     = 127.0.0.1
+endif
+ifndef EMULATOR_PORT
+EMULATOR_PORT     = 1234
+endif
+
 # -----------------------------------------------------------------------------
 
 include ${BSP}/share/putty.mk
@@ -45,15 +55,15 @@ include ${BSP}/share/putty.mk
 
 # -----------------------------------------------------------------------------
 
-build   :           ${PROJECT_TARGETS}
+build   :                           ${PROJECT_TARGETS}
 
-clean   : 
-	@rm --force ${PROJECT_TARGETS}
+clean   :
+	@rm --force                 ${PROJECT_TARGETS}
 
-program :           ${PROJECT_TARGETS}
-	@lpc21isp -wipe -hex $(filter %.hex, ${^}) ${USB} 9600 12000
+program :           $(filter %.hex, ${PROJECT_TARGETS})
+	@lpc21isp -wipe -hex ${<} ${USB} 9600 12000
 
-emulate :           ${PROJECT_TARGETS}
-	@python -O ${BSP}/share/emulator.py --file="$(filter %.hex, ${^})" --host="127.0.0.1" --port="1234" --target="lpc1114fn28"
+emulate :           $(filter %.hex, ${PROJECT_TARGETS})
+	@python3 -O ${BSP}/share/emulator.py --file="${<}" --host="${EMULATOR_HOST}" --port="${EMULATOR_PORT}" --target="lpc1114fn28"
 
 # =============================================================================
