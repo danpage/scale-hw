@@ -5,17 +5,14 @@
 # as LICENSE.txt within the associated archive or repository).
 
 ifndef PROJECT
-  $(warning PROJECT environment variable not set)
+  $(warning warning: PROJECT environment variable not set)
 endif
 ifndef BSP
-  $(warning     BSP environment variable not set)
+  $(warning warning:     BSP environment variable not set)
 endif
 ifndef USB
-  $(warning     USB environment variable not set)
+  $(warning warning:     USB environment variable not set)
 endif
-
-ifndef HOST
-HOST = 
 
 # =============================================================================
 
