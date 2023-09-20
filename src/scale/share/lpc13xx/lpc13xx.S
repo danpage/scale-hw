@@ -16,6 +16,7 @@
 // ============================================================================
 
                     .section .data.lpc13xx, "w"
+                    .align   8
 
                     .global  LPC13XX_SYSCON
                     .global  LPC13XX_IOCON
@@ -50,6 +51,7 @@ lpc13xx_tsc:        .word    0xFFFFFFFF
 // ----------------------------------------------------------------------------
 
                     .section .text.lpc13xx, "x"
+                    .align   8
 
                     .thumb_func  
                     .global  lpc13xx_irq_enable

@@ -16,6 +16,7 @@
 // ============================================================================
 
                     .section .data.lpc81x, "w"
+                    .align   8
 
                     .global  LPC81X_SYSCON
                     .global  LPC81X_IOCON
@@ -50,6 +51,7 @@ lpc81x_tsc:         .word    0xFFFFFFFF
 // ----------------------------------------------------------------------------
 
                     .section .text.lpc81x, "x"
+                    .align   8
 
                     .thumb_func  
                     .global  lpc81x_irq_enable

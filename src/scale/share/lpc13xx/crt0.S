@@ -30,6 +30,7 @@
  * http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0552a/BABIFJFG.html
  */
                     .section .data.__irq_handler, "w"
+                    .align   8
 
                     .global  __irq_table
 
@@ -57,6 +58,7 @@ __irq_table:        .word    __tos             // 0x00000000 => Top of Stack
 // ----------------------------------------------------------------------------
 
                     .section .text.__irq_handler, "x"
+                    .align   8
 
                     .global  __irq_handler_nul
                     .thumb_func
@@ -119,6 +121,7 @@ __irq_handler_tsc:  ldr      r0, =lpc13xx_tsc  // r0  = &lpc13xx_tsc
 // ============================================================================
 
                     .section .text.__start,       "x"	
+                    .align   8
 
                     .global  __start	
                     .thumb_func  
