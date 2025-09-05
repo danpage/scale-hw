@@ -1,8 +1,8 @@
-capstone==4.0.2
+capstone==5.0.6
 intelhex==2.3.0
 numpy
 picoscope==0.7.31
-pycryptodomex==3.18.0
+pycryptodomex==3.23.0
 pyserial==3.5
 scipy
-unicorn==1.0.3
+unicorn==2.1.3
